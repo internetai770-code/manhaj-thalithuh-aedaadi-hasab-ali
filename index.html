@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تعلم Visual Basic .NET - الصف الثالث الإعدادي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --p:#1a3a6e;--s:#2563eb;--a:#f59e0b;--g:#10b981;--r:#ef4444;
+  --bg:#f0f4ff;--card:#fff;--tx:#1e293b;--mu:#64748b;--bd:#e2e8f0;
+  --grad:linear-gradient(135deg,#1a3a6e,#2563eb 60%,#7c3aed);
+  --sh:0 4px 24px rgba(37,99,235,.10);--ra:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;overflow-x:hidden;padding-bottom:74px;}
+
+/* ═══ TOP NAV ═══ */
+.tnav-bar{background:var(--grad);position:sticky;top:0;z-index:900;box-shadow:0 2px 20px rgba(37,99,235,.25);}
+.tnav-in{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 18px;gap:10px;flex-wrap:wrap;}
+.logo{color:#fff;font-weight:900;font-size:1.05rem;display:flex;align-items:center;gap:6px;cursor:pointer;white-space:nowrap;}
+.logo .li{font-size:1.45rem;}
+.tlinks{display:flex;gap:5px;flex-wrap:wrap;}
+.tb{background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.25);padding:6px 13px;border-radius:30px;cursor:pointer;font-family:'Cairo',sans-serif;font-size:.8rem;font-weight:700;transition:.2s;white-space:nowrap;}
+.tb:hover,.tb.on{background:#fff;color:var(--p);border-color:#fff;}
+.pts{background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.3);border-radius:30px;padding:5px 13px;color:#fff;font-size:.82rem;font-weight:700;display:flex;align-items:center;gap:5px;white-space:nowrap;}
+.upill{background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.35);border-radius:30px;padding:5px 13px;color:#fff;font-size:.8rem;font-weight:700;display:flex;align-items:center;gap:5px;cursor:pointer;transition:.2s;display:none;}
+.upill:hover{background:rgba(255,255,255,.3);}
+
+/* ═══ BOTTOM NAV ═══ */
+.bnav-bar{position:fixed;bottom:0;left:0;right:0;z-index:900;background:#fff;border-top:2px solid var(--bd);box-shadow:0 -4px 20px rgba(37,99,235,.10);display:flex;height:66px;}
+.bb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;background:transparent;cursor:pointer;font-family:'Cairo',sans-serif;color:var(--mu);font-size:.62rem;font-weight:700;transition:.2s;padding:4px 2px;border-top:3px solid transparent;}
+.bb .bi{font-size:1.3rem;line-height:1;transition:transform .2s;}
+.bb:hover{color:var(--s);}.bb:hover .bi{transform:translateY(-2px);}
+.bb.on{color:var(--s);border-top-color:var(--s);background:linear-gradient(180deg,#eff6ff,transparent);}
+.bb.on .bi{transform:translateY(-2px);}
+
+/* ═══ PAGES ═══ */
+.pg{display:none;animation:fi .3s ease;}.pg.on{display:block;}
+@keyframes fi{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+/* ═══ HERO ═══ */
+.hero{background:var(--grad);color:#fff;text-align:center;padding:54px 20px 68px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23fff' fill-opacity='.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.35);border-radius:30px;padding:5px 17px;font-size:.83rem;margin-bottom:17px;font-weight:700;}
+.hero h1{font-size:clamp(1.65rem,5vw,2.7rem);font-weight:900;line-height:1.3;margin-bottom:13px;text-shadow:0 2px 10px rgba(0,0,0,.2);}
+.hero p{font-size:.97rem;opacity:.9;max-width:560px;margin:0 auto 30px;line-height:1.8;}
+.hcards{display:flex;justify-content:center;gap:12px;margin-bottom:34px;flex-wrap:wrap;}
+.hcard{background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.2);border-radius:13px;padding:14px 16px;display:flex;flex-direction:column;align-items:center;gap:5px;min-width:84px;transition:transform .2s;}
+.hcard:hover{transform:translateY(-4px);}.hcard .ic{font-size:1.9rem;}.hcard span{font-size:.75rem;font-weight:700;opacity:.9;}
+.hbtns{display:flex;gap:11px;justify-content:center;flex-wrap:wrap;}
+.btn-a{background:var(--a);color:#1a1a1a;border:none;padding:12px 28px;border-radius:38px;font-family:'Cairo',sans-serif;font-size:.93rem;font-weight:800;cursor:pointer;transition:.2s;box-shadow:0 4px 15px rgba(245,158,11,.4);}
+.btn-a:hover{transform:translateY(-2px);background:#fbbf24;}
+.btn-o{background:rgba(255,255,255,.15);color:#fff;border:2px solid rgba(255,255,255,.5);padding:12px 28px;border-radius:38px;font-family:'Cairo',sans-serif;font-size:.93rem;font-weight:700;cursor:pointer;transition:.2s;}
+.btn-o:hover{background:#fff;color:var(--p);}
+
+/* STATS */
+.stats{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;padding:26px 20px;background:#fff;border-bottom:1px solid var(--bd);}
+.stat .n{font-size:1.9rem;font-weight:900;color:var(--s);text-align:center;}
+.stat .l{font-size:.82rem;color:var(--mu);font-weight:600;}
+
+/* SECTION */
+.sec{max-width:1100px;margin:34px auto;padding:0 20px;}
+.sec-t{font-size:1.45rem;font-weight:900;color:var(--p);margin-bottom:5px;text-align:center;}
+.sec-s{font-size:.87rem;color:var(--mu);text-align:center;margin-bottom:24px;}
+.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+@media(max-width:620px){.tgrid{grid-template-columns:1fr;}}
+.tcard{background:#fff;border-radius:var(--ra);padding:22px;box-shadow:var(--sh);border-top:5px solid;cursor:pointer;transition:.2s;}
+.tcard:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(37,99,235,.18);}
+.tcard.t1{border-top-color:var(--s);}.tcard.t2{border-top-color:var(--g);}
+.tcard-hd{display:flex;align-items:center;gap:11px;margin-bottom:12px;}
+.tcard-ic{width:46px;height:46px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.45rem;}
+.t1 .tcard-ic{background:#dbeafe;}.t2 .tcard-ic{background:#d1fae5;}
+.tcard h3{font-size:1.05rem;font-weight:800;color:var(--p);}.tcard p{font-size:.82rem;color:var(--mu);}
+.chips{margin-top:10px;display:flex;flex-direction:column;gap:5px;}
+.chip{display:flex;align-items:center;gap:7px;font-size:.8rem;padding:4px 7px;border-radius:7px;background:var(--bg);font-weight:600;}
+.chip .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.t1 .dot{background:var(--s);}.t2 .dot{background:var(--g);}
+.tcard-btn{margin-top:16px;padding:9px 20px;border-radius:28px;border:none;font-family:'Cairo',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;width:100%;transition:.2s;}
+.t1 .tcard-btn{background:#dbeafe;color:var(--s);}.t1 .tcard-btn:hover{background:var(--s);color:#fff;}
+.t2 .tcard-btn{background:#d1fae5;color:var(--g);}.t2 .tcard-btn:hover{background:var(--g);color:#fff;}
+
+/* ═══ PAGE NAV (التالي/السابق) ═══ */
+.pnav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px;max-width:1100px;margin:0 auto;flex-wrap:wrap;}
+.pnav-btn{display:flex;align-items:center;gap:7px;padding:12px 20px;border-radius:12px;border:2px solid var(--bd);background:#fff;font-family:'Cairo',sans-serif;font-size:.87rem;font-weight:700;cursor:pointer;color:var(--tx);transition:.2s;box-shadow:0 2px 8px rgba(0,0,0,.05);}
+.pnav-btn:hover:not(:disabled){border-color:var(--s);color:var(--s);transform:translateY(-2px);}
+.pnav-btn:disabled{opacity:.3;cursor:not-allowed;}
+.pnav-btn.next{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 4px 14px rgba(37,99,235,.3);}
+.pnav-btn.next:hover:not(:disabled){opacity:.9;}
+.pnav-ctr{text-align:center;}
+.pnav-ctr .pc-l{font-size:.73rem;color:var(--mu);font-weight:600;}
+.pnav-ctr .pc-t{font-size:.88rem;font-weight:800;color:var(--p);}
+
+/* ═══ AUTH ═══ */
+.auth-wrap{min-height:80vh;display:flex;align-items:center;justify-content:center;padding:34px 20px;}
+.auth-card{background:#fff;border-radius:22px;padding:38px 34px;max-width:430px;width:100%;box-shadow:0 8px 40px rgba(37,99,235,.15);text-align:center;}
+.auth-tabs{display:flex;background:var(--bg);border-radius:11px;padding:3px;margin-bottom:24px;gap:3px;}
+.a-tab{flex:1;padding:9px;border-radius:9px;border:none;font-family:'Cairo',sans-serif;font-size:.87rem;font-weight:700;cursor:pointer;color:var(--mu);background:transparent;transition:.2s;}
+.a-tab.on{background:#fff;color:var(--s);box-shadow:0 2px 8px rgba(37,99,235,.15);}
+.auth-ico{font-size:3rem;margin-bottom:8px;}
+.auth-card h2{font-size:1.4rem;font-weight:900;color:var(--p);margin-bottom:5px;}
+.auth-card .sub{font-size:.84rem;color:var(--mu);margin-bottom:22px;line-height:1.7;}
+.fgrp{margin-bottom:13px;text-align:right;}
+.fgrp label{display:block;font-weight:700;font-size:.83rem;margin-bottom:5px;color:var(--p);}
+.fgrp input{width:100%;padding:12px 14px;border:2px solid var(--bd);border-radius:11px;font-family:'Cairo',sans-serif;font-size:.92rem;outline:none;transition:.2s;background:var(--bg);}
+.fgrp input:focus{border-color:var(--s);background:#fff;}
+.auth-btn{width:100%;background:var(--grad);color:#fff;border:none;padding:14px;border-radius:12px;font-family:'Cairo',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;transition:.2s;box-shadow:0 4px 15px rgba(37,99,235,.3);margin-top:3px;}
+.auth-btn:hover{transform:translateY(-2px);}
+.a-err{background:#fee2e2;border:1.5px solid #fca5a5;border-radius:9px;padding:9px 13px;font-size:.84rem;color:#7f1d1d;font-weight:600;margin-bottom:11px;display:none;text-align:right;}
+.a-ok{background:#d1fae5;border:1.5px solid #6ee7b7;border-radius:9px;padding:9px 13px;font-size:.84rem;color:#065f46;font-weight:600;margin-bottom:11px;display:none;text-align:right;}
+.sw-link{margin-top:13px;font-size:.82rem;color:var(--mu);}
+.sw-link a{color:var(--s);font-weight:700;cursor:pointer;}
+.wbox{background:linear-gradient(135deg,#dbeafe,#d1fae5);border-radius:15px;padding:20px;margin-top:18px;display:none;text-align:center;}
+.wbox .we{font-size:2.3rem;margin-bottom:6px;}
+.wbox h3{font-size:1.05rem;font-weight:800;color:var(--p);}
+.wbox p{font-size:.82rem;color:var(--mu);margin-top:3px;}
+.wgo{display:inline-block;margin-top:11px;background:var(--grad);color:#fff;border:none;padding:10px 22px;border-radius:11px;font-family:'Cairo',sans-serif;font-size:.87rem;font-weight:800;cursor:pointer;transition:.2s;}
+.wgo:hover{transform:translateY(-2px);}
+
+/* ═══ LESSONS ═══ */
+.les-hdr{background:var(--grad);color:#fff;padding:34px 20px;text-align:center;}
+.les-hdr h2{font-size:1.55rem;font-weight:900;margin-bottom:5px;}
+.les-hdr p{opacity:.85;font-size:.93rem;}
+.term-tabs{display:flex;gap:9px;justify-content:center;padding:14px 20px;background:#fff;border-bottom:1px solid var(--bd);flex-wrap:wrap;}
+.ttab{padding:8px 24px;border-radius:28px;border:2px solid var(--bd);background:#fff;font-family:'Cairo',sans-serif;font-size:.87rem;font-weight:700;cursor:pointer;color:var(--mu);transition:.2s;}
+.ttab:hover{border-color:var(--s);}
+.ttab.a1{background:#dbeafe;border-color:var(--s);color:var(--s);}
+.ttab.a2{background:#d1fae5;border-color:var(--g);color:var(--g);}
+.ll{max-width:1100px;margin:26px auto;padding:0 20px;display:grid;grid-template-columns:255px 1fr;gap:20px;}
+@media(max-width:760px){.ll{grid-template-columns:1fr;}}
+.lsb{background:#fff;border-radius:var(--ra);padding:16px;box-shadow:var(--sh);height:fit-content;position:sticky;top:74px;}
+.lsb-t{font-size:.9rem;font-weight:800;color:var(--p);margin-bottom:10px;padding-bottom:7px;border-bottom:2px solid var(--bd);}
+.litm{display:flex;align-items:center;gap:7px;padding:8px 9px;border-radius:8px;cursor:pointer;transition:.2s;margin-bottom:2px;font-size:.8rem;font-weight:600;color:var(--tx);}
+.litm:hover{background:var(--bg);}.litm.on{background:var(--s);color:#fff;}
+.litm .lnum{width:23px;height:23px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;flex-shrink:0;}
+.litm.v1 .lnum{background:#dbeafe;color:var(--s);}.litm.v2 .lnum{background:#d1fae5;color:var(--g);}
+.litm.on .lnum{background:rgba(255,255,255,.25);color:#fff;}
+.litm .chk{margin-right:auto;color:var(--g);font-size:.82rem;}
+.lcon{background:#fff;border-radius:var(--ra);padding:26px;box-shadow:var(--sh);}
+.lbread{font-size:.74rem;color:var(--mu);margin-bottom:12px;display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
+.ltop{display:flex;align-items:flex-start;gap:12px;margin-bottom:19px;padding-bottom:15px;border-bottom:2px solid var(--bd);}
+.lbigic{width:56px;height:56px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.75rem;flex-shrink:0;}
+.bg1{background:linear-gradient(135deg,#dbeafe,#bfdbfe);}.bg2{background:linear-gradient(135deg,#d1fae5,#a7f3d0);}
+.ltop h2{font-size:1.3rem;font-weight:900;color:var(--p);}
+.ltop p{font-size:.82rem;color:var(--mu);margin-top:3px;}
+.lbody{font-size:.95rem;line-height:1.9;}
+.lbody h3{font-size:1rem;font-weight:800;color:var(--p);margin:18px 0 8px;}
+.lbody p{margin-bottom:10px;}
+.lbody ul{padding-right:19px;margin-bottom:10px;}
+.lbody li{margin-bottom:5px;}
+
+/* CODE */
+.cbox{background:#0f172a;border-radius:12px;overflow:hidden;margin:15px 0;box-shadow:0 4px 20px rgba(0,0,0,.2);}
+.chd{background:#1e293b;padding:8px 15px;display:flex;align-items:center;justify-content:space-between;}
+.cdl{display:flex;align-items:center;gap:6px;}
+.cd{width:10px;height:10px;border-radius:50%;}
+.cd.r{background:#ef4444;}.cd.y{background:#f59e0b;}.cd.g{background:#10b981;}
+.clg{font-size:.73rem;color:#94a3b8;font-weight:600;font-family:monospace;}
+.cpre{padding:17px 15px;font-family:'Courier New',monospace;font-size:.82rem;line-height:1.7;color:#e2e8f0;direction:ltr;text-align:left;overflow-x:auto;white-space:pre;}
+.kw{color:#93c5fd;}.str{color:#6ee7b7;}.cm{color:#6b7280;font-style:italic;}.fn{color:#fcd34d;}.nm{color:#f9a8d4;}
+
+/* INFO BOXES */
+.ib{border-radius:10px;padding:12px 16px;margin:12px 0;display:flex;gap:9px;align-items:flex-start;}
+.ib.bl{background:#dbeafe;border-right:4px solid var(--s);}
+.ib.gr{background:#d1fae5;border-right:4px solid var(--g);}
+.ib.yl{background:#fef3c7;border-right:4px solid var(--a);}
+.ib .ic{font-size:1.1rem;flex-shrink:0;margin-top:2px;}
+.ib p{font-size:.85rem;line-height:1.7;font-weight:600;}
+
+/* DIAGRAM */
+.diag{background:var(--bg);border:2px dashed var(--bd);border-radius:12px;padding:16px;margin:15px 0;text-align:center;}
+.diag-t{font-size:.78rem;font-weight:700;color:var(--mu);margin-bottom:9px;}
+.fmock{background:#fff;border:2px solid #94a3b8;border-radius:7px;overflow:hidden;max-width:350px;margin:0 auto;box-shadow:0 4px 12px rgba(0,0,0,.08);}
+.ftbar{background:var(--p);color:#fff;padding:6px 10px;font-size:.74rem;font-weight:700;display:flex;align-items:center;gap:6px;direction:ltr;}
+.ftbar .tbtns{margin-right:auto;display:flex;gap:3px;}
+.tbtn{width:10px;height:10px;border-radius:50%;}
+.fbody{padding:13px;direction:ltr;}
+.mlbl{font-size:.68rem;color:#64748b;margin-bottom:2px;}
+.mtb{border:1.5px solid #94a3b8;border-radius:3px;padding:4px 7px;font-size:.74rem;width:145px;display:block;margin-bottom:8px;background:#fff;}
+.mbtn{background:var(--s);color:#fff;border:none;padding:5px 12px;border-radius:3px;font-size:.74rem;cursor:pointer;font-family:'Cairo',sans-serif;}
+
+/* LESSON INNER NAV */
+.lnav{display:flex;align-items:center;justify-content:space-between;margin-top:22px;padding-top:15px;border-top:2px solid var(--bd);gap:9px;flex-wrap:wrap;}
+.lnav-btn{display:flex;align-items:center;gap:6px;padding:10px 17px;border-radius:11px;border:2px solid var(--bd);background:#fff;font-family:'Cairo',sans-serif;font-size:.84rem;font-weight:700;cursor:pointer;color:var(--tx);transition:.2s;}
+.lnav-btn:hover:not(:disabled){border-color:var(--s);color:var(--s);transform:translateY(-2px);}
+.lnav-btn:disabled{opacity:.3;cursor:not-allowed;}
+.lnav-btn.nxt{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 3px 12px rgba(37,99,235,.3);}
+.lnav-btn.nxt:hover:not(:disabled){opacity:.9;}
+.done-btn{background:var(--g);color:#fff;border:none;padding:10px 20px;border-radius:10px;font-family:'Cairo',sans-serif;font-size:.86rem;font-weight:800;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:5px;}
+.done-btn:hover{background:#059669;transform:translateY(-2px);}
+
+/* ═══ QUIZ ═══ */
+.quiz-hdr{background:var(--grad);color:#fff;padding:34px 20px;text-align:center;}
+.quiz-hdr h2{font-size:1.55rem;font-weight:900;margin-bottom:5px;}
+.qwrap{max-width:660px;margin:26px auto;padding:0 20px;}
+.qsel{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+@media(max-width:460px){.qsel{grid-template-columns:1fr;}}
+.qsc{background:#fff;border-radius:var(--ra);padding:20px;text-align:center;cursor:pointer;box-shadow:var(--sh);border:2.5px solid transparent;transition:.2s;}
+.qsc:hover{border-color:var(--s);transform:translateY(-3px);}
+.qsc .big{font-size:2.3rem;margin-bottom:8px;}
+.qsc h3{font-size:1rem;font-weight:800;color:var(--p);}
+.qsc p{font-size:.8rem;color:var(--mu);margin-top:4px;}
+.qbox{background:#fff;border-radius:var(--ra);padding:24px;box-shadow:var(--sh);display:none;}
+.qprog{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.qpt{font-size:.82rem;font-weight:700;color:var(--mu);}
+.qbw{flex:1;height:7px;background:var(--bd);border-radius:10px;margin:0 11px;overflow:hidden;}
+.qb{height:100%;background:var(--s);border-radius:10px;transition:width .4s;}
+.qnum{font-size:.75rem;font-weight:700;color:var(--mu);margin-bottom:4px;}
+.qtb{display:inline-block;padding:3px 9px;border-radius:20px;font-size:.71rem;font-weight:700;margin-bottom:8px;}
+.qtb.mc{background:#dbeafe;color:var(--s);}.qtb.tf{background:#fef3c7;color:#92400e;}
+.qtxt{font-size:.98rem;font-weight:700;line-height:1.7;}
+.opts{display:flex;flex-direction:column;gap:8px;margin-top:12px;}
+.opt{text-align:right;padding:11px 14px;border-radius:10px;border:2px solid var(--bd);background:#fff;font-family:'Cairo',sans-serif;font-size:.87rem;font-weight:600;cursor:pointer;color:var(--tx);transition:.2s;display:flex;align-items:center;gap:8px;}
+.opt .ol{width:25px;height:25px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:.74rem;font-weight:800;flex-shrink:0;transition:.2s;}
+.opt:hover:not(:disabled){border-color:var(--s);background:#f0f7ff;}
+.opt:hover:not(:disabled) .ol{background:var(--s);color:#fff;}
+.opt.correct{background:#d1fae5;border-color:var(--g);}.opt.correct .ol{background:var(--g);color:#fff;}
+.opt.wrong{background:#fee2e2;border-color:var(--r);}.opt.wrong .ol{background:var(--r);color:#fff;}
+.opt:disabled{cursor:not-allowed;}
+.qact{display:flex;justify-content:flex-end;margin-top:18px;padding-top:15px;border-top:2px solid var(--bd);}
+.qnxt{background:var(--s);color:#fff;border:none;padding:10px 24px;border-radius:10px;font-family:'Cairo',sans-serif;font-size:.91rem;font-weight:800;cursor:pointer;transition:.2s;display:none;}
+.qnxt:hover{background:var(--p);}.qnxt.vis{display:block;}
+.qres{text-align:center;padding:34px 20px;display:none;}
+.rcirc{width:108px;height:108px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 15px;font-weight:900;box-shadow:0 4px 20px rgba(0,0,0,.1);}
+.rcirc .sn{font-size:1.9rem;line-height:1;}.rcirc .st{font-size:.8rem;opacity:.8;}
+.rcirc.exc{background:linear-gradient(135deg,#d1fae5,#a7f3d0);color:#065f46;}
+.rcirc.gd{background:linear-gradient(135deg,#dbeafe,#bfdbfe);color:#1e3a8a;}
+.rcirc.ps{background:linear-gradient(135deg,#fef3c7,#fde68a);color:#78350f;}
+.rcirc.fl{background:linear-gradient(135deg,#fee2e2,#fecaca);color:#7f1d1d;}
+.rtit{font-size:1.35rem;font-weight:900;color:var(--p);margin-bottom:6px;}
+.rmsg{font-size:.9rem;color:var(--mu);margin-bottom:16px;}
+.stars{display:flex;justify-content:center;gap:5px;margin-bottom:16px;font-size:1.75rem;}
+.retry{background:var(--grad);color:#fff;border:none;padding:10px 26px;border-radius:10px;font-family:'Cairo',sans-serif;font-size:.9rem;font-weight:800;cursor:pointer;transition:.2s;}
+.retry:hover{transform:translateY(-2px);}
+
+/* ═══ CERTIFICATE ═══ */
+.cpg{max-width:840px;margin:34px auto;padding:0 20px;}
+.chdr{text-align:center;margin-bottom:24px;}
+.chdr h2{font-size:1.55rem;font-weight:900;color:var(--p);margin-bottom:5px;}
+.chdr p{color:var(--mu);}
+.cbox{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 8px 40px rgba(37,99,235,.15);}
+.cin{background:linear-gradient(135deg,#f8faff 0%,#fff8e6 50%,#f0fff8 100%);padding:42px 34px;text-align:center;}
+.cfr{border:3px solid var(--a);border-radius:17px;padding:34px 28px;background:linear-gradient(135deg,#fffbeb,#f0f9ff);position:relative;}
+.cfr::before{content:'❋';position:absolute;top:9px;right:13px;font-size:1.35rem;color:var(--a);}
+.cfr::after{content:'❋';position:absolute;bottom:9px;left:13px;font-size:1.35rem;color:var(--a);}
+.clogo{font-size:3rem;margin-bottom:6px;}
+.corg{font-size:.82rem;color:var(--mu);font-weight:600;margin-bottom:16px;letter-spacing:2px;}
+.ctit{font-size:clamp(1.05rem,3vw,1.55rem);font-weight:900;color:var(--p);margin-bottom:13px;line-height:1.4;}
+.cpre{font-size:.87rem;color:var(--mu);margin-bottom:6px;}
+.cname{font-size:clamp(1.35rem,4vw,2.2rem);font-weight:900;color:var(--a);margin:9px 0;text-decoration:underline;text-decoration-color:rgba(245,158,11,.3);text-underline-offset:5px;}
+.cdesc{font-size:.87rem;color:var(--tx);line-height:1.8;max-width:480px;margin:13px auto;}
+.cdiv{display:flex;align-items:center;gap:10px;margin:16px 0;color:var(--a);}
+.cdiv::before,.cdiv::after{content:'';flex:1;height:1.5px;background:linear-gradient(90deg,transparent,var(--a),transparent);}
+.cstars{font-size:1.35rem;letter-spacing:4px;color:var(--a);margin:9px 0;}
+.cftr{display:flex;justify-content:space-around;padding-top:16px;flex-wrap:wrap;gap:13px;}
+.csig{text-align:center;}.csig-line{width:105px;height:2px;background:var(--p);margin:0 auto 4px;}.csig p{font-size:.75rem;color:var(--mu);font-weight:600;}
+.printbtn{display:block;margin:20px auto 0;background:var(--grad);color:#fff;border:none;padding:13px 34px;border-radius:12px;font-family:'Cairo',sans-serif;font-size:.92rem;font-weight:800;cursor:pointer;transition:.2s;}
+.printbtn:hover{transform:translateY(-2px);}
+.clocked{text-align:center;padding:52px 20px;background:#fff;border-radius:20px;box-shadow:var(--sh);}
+.clocked .li{font-size:3.6rem;margin-bottom:13px;}
+.clocked h3{font-size:1.15rem;font-weight:800;color:var(--p);margin-bottom:6px;}
+.clocked p{color:var(--mu);font-size:.88rem;line-height:1.8;}
+.psum{background:#fff;border-radius:12px;padding:16px;margin-top:16px;box-shadow:var(--sh);}
+.psum h4{font-weight:800;color:var(--p);margin-bottom:11px;}
+.pi{display:flex;align-items:center;gap:10px;margin-bottom:9px;}
+.pi span:first-child{font-size:.83rem;font-weight:600;width:125px;flex-shrink:0;}
+.pbw{flex:1;height:7px;background:var(--bd);border-radius:10px;overflow:hidden;}
+.pbf{height:100%;border-radius:10px;transition:width .5s;}
+.pi .pp{font-size:.76rem;font-weight:700;color:var(--mu);}
+
+/* ABOUT */
+.abw{max-width:760px;margin:34px auto;padding:0 20px;}
+.abc{background:#fff;border-radius:var(--ra);padding:28px;box-shadow:var(--sh);margin-bottom:16px;}
+.abc h2{font-size:1.25rem;font-weight:900;color:var(--p);margin-bottom:12px;padding-bottom:9px;border-bottom:2px solid var(--bd);}
+.abc p{font-size:.88rem;line-height:1.9;margin-bottom:9px;}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px;}
+.fi2{background:var(--bg);border-radius:10px;padding:12px;text-align:center;}
+.fi2 .fi{font-size:1.75rem;margin-bottom:5px;}.fi2 h4{font-size:.82rem;font-weight:700;color:var(--p);margin-bottom:2px;}.fi2 p{font-size:.75rem;color:var(--mu);margin:0;}
+
+/* TOAST */
+.toast{position:fixed;bottom:82px;right:20px;background:var(--p);color:#fff;padding:12px 18px;border-radius:12px;font-size:.86rem;font-weight:700;box-shadow:0 8px 30px rgba(0,0,0,.2);z-index:9999;transform:translateX(200%);transition:transform .3s;max-width:280px;display:flex;align-items:center;gap:7px;}
+.toast.show{transform:translateX(0);}.toast.g{background:var(--g);}.toast.o{background:#d97706;}
+
+/* ── VICTORY SPLASH ── */
+.splash-overlay{position:fixed;inset:0;z-index:9999;background:var(--grad);display:flex;align-items:center;justify-content:center;visibility:hidden;opacity:0;transition:opacity .35s,visibility .35s;}
+.splash-overlay.show{visibility:visible;opacity:1;}
+.victory-box{text-align:center;color:#fff;}
+.v-trophy{font-size:6rem;display:block;}
+.v-trophy.pop{animation:trophy-pop .5s cubic-bezier(.36,.07,.19,.97) both;}
+@keyframes trophy-pop{0%{transform:scale(0);opacity:0;}60%{transform:scale(1.35);}80%{transform:scale(.92);}100%{transform:scale(1);}}
+.v-stars{font-size:2rem;letter-spacing:6px;margin:12px 0;opacity:0;}
+.v-stars.pop{animation:fade-up .4s ease .35s both;}
+.v-title{font-size:2.2rem;font-weight:900;margin-bottom:8px;opacity:0;}
+.v-title.pop{animation:fade-up .4s ease .45s both;}
+.v-sub{font-size:1rem;opacity:0;}
+.v-sub.pop{animation:fade-up .4s ease .55s both;}
+@keyframes fade-up{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.65);z-index:9000;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .25s;}
+.modal-overlay.show{opacity:1;pointer-events:all;}
+.modal-box{background:#fff;border-radius:22px;padding:36px 30px;max-width:380px;width:100%;text-align:center;box-shadow:0 16px 60px rgba(0,0,0,.25);transform:scale(.9) translateY(10px);transition:transform .25s;}
+.modal-overlay.show .modal-box{transform:scale(1) translateY(0);}
+.modal-ic{font-size:3.5rem;margin-bottom:10px;}
+.modal-box h3{font-size:1.3rem;font-weight:900;color:var(--p);margin-bottom:8px;}
+.modal-box p{font-size:.9rem;color:var(--mu);line-height:1.7;margin-bottom:22px;}
+.modal-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.modal-btn-go{background:var(--grad);color:#fff;border:none;padding:12px 28px;border-radius:12px;font-family:'Cairo',sans-serif;font-size:.95rem;font-weight:800;cursor:pointer;transition:.2s;}
+.modal-btn-go:hover{opacity:.9;transform:translateY(-2px);}
+.modal-btn-cancel{background:var(--bg);color:var(--mu);border:2px solid var(--bd);padding:12px 22px;border-radius:12px;font-family:'Cairo',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:.2s;}
+.modal-btn-cancel:hover{border-color:var(--mu);}
+
+/* YOUTUBE BTN */
+.yt-btn{display:inline-flex;align-items:center;gap:8px;background:#ff0000;color:#fff;border:none;padding:11px 22px;border-radius:11px;font-family:'Cairo',sans-serif;font-size:.9rem;font-weight:800;cursor:pointer;text-decoration:none;transition:.2s;margin:13px 0;box-shadow:0 4px 14px rgba(255,0,0,.3);}
+.yt-btn:hover{background:#cc0000;transform:translateY(-2px);}
+.yt-btn .yt-ic{font-size:1.2rem;}
+/* REVIEW / INTRO lesson background */
+.bgr{background:linear-gradient(135deg,#fef3c7,#fde68a);}
+.litm.rev .lnum{background:#fef3c7;color:#92400e;}
+.litm.on.rev .lnum{background:rgba(255,255,255,.25);color:#fff;}
+
+@media print{.tnav-bar,.bnav-bar,.printbtn,.clocked,.psum,.pnav,.lnav{display:none!important;}body{background:#fff;padding:0;}}
+</style>
+</head>
+<body>
+
+<!-- ═══ TOP NAV ═══ -->
+<div class="tnav-bar">
+  <div class="tnav-in">
+    <div class="logo" onclick="go('home')"><span class="li">💻</span>VB.NET التعليمي</div>
+    <div class="tlinks">
+      <button class="tb on"  id="t-home"  onclick="go('home')">🏠 الرئيسية</button>
+      <button class="tb"     id="t-login" onclick="go('login')">👤 الدخول</button>
+      <button class="tb"     id="t-l1"    onclick="guardedOpenL(1)">📗 الترم الأول</button>
+      <button class="tb"     id="t-l2"    onclick="guardedOpenL(2)">📘 الترم الثاني</button>
+      <button class="tb"     id="t-quiz"  onclick="guardedGo('quiz')">🏆 الاختبارات</button>
+      <button class="tb"     id="t-cert"  onclick="guardedGo('cert')">🎓 الشهادة</button>
+      <button class="tb"     id="t-about" onclick="go('about')">ℹ️ عن الموقع</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;">
+      <div class="pts">⭐ <span id="pts">0</span> نقطة</div>
+      <div class="upill" id="upill" title="اضغط لتسجيل الخروج">👤 <span id="uname-disp"></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BOTTOM NAV ═══ -->
+<div class="bnav-bar">
+  <button class="bb on" id="b-home"  onclick="go('home')"><span class="bi">🏠</span><span>الرئيسية</span></button>
+  <button class="bb"    id="b-login" onclick="go('login')"><span class="bi">👤</span><span>دخول</span></button>
+  <button class="bb"    id="b-l1"   onclick="guardedOpenL(1)"><span class="bi">📗</span><span>ترم ١</span></button>
+  <button class="bb"    id="b-l2"   onclick="guardedOpenL(2)"><span class="bi">📘</span><span>ترم ٢</span></button>
+  <button class="bb"    id="b-quiz" onclick="guardedGo('quiz')"><span class="bi">🏆</span><span>اختبارات</span></button>
+  <button class="bb"    id="b-cert" onclick="guardedGo('cert')"><span class="bi">🎓</span><span>شهادة</span></button>
+</div>
+
+<!-- ════════════ PAGES ════════════ -->
+
+<!-- ① HOME -->
+<div class="pg on" id="pg-home">
+  <div class="hero" style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px;">
+    <div class="hero-badge">🎓 منهج الصف الثالث الإعدادي</div>
+    <h1>تعلّم لغة الفيجوال بيزك<br>Visual Basic .NET</h1>
+    <p>بطريقة ممتعة وسهلة</p>
+    <div style="margin-top:36px;">
+      <button class="btn-a" style="font-size:1.1rem;padding:16px 48px;min-width:220px;" onclick="startSplash()">🚀 ابدأ التعلم</button>
+    </div>
+  </div>
+</div>
+
+<!-- ② LOGIN -->
+<div class="pg" id="pg-login">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div id="fl">
+        <div class="auth-ico">✏️</div>
+        <h2>أدخل اسمك</h2>
+        <p class="sub">اكتب اسمك الكامل لتبدأ رحلة التعلم وتتابع تقدمك!</p>
+        <div class="a-err" id="le"></div>
+        <div class="fgrp"><label>اسمك الكامل</label><input id="lu" type="text" placeholder="" autocomplete="name" onkeydown="if(event.key==='Enter') doLogin()"></div>
+        <button class="auth-btn" onclick="doLogin()">✅ تسجيل الدخول</button>
+      </div>
+      <div class="wbox" id="wbox">
+        <div class="we">🎉</div>
+        <h3 id="wname">مرحباً بك!</h3>
+        <p>استمر في رحلتك التعليمية الرائعة!</p>
+      </div>
+    </div>
+  </div>
+  <div class="pnav">
+    <button class="pnav-btn" onclick="go('home')">← السابق</button>
+    <div class="pnav-ctr"><div class="pc-l">الخطوة التالية</div><div class="pc-t">📗 الترم الأول</div></div>
+    <button class="pnav-btn next" onclick="guardedOpenL(1)">التالي: الترم الأول →</button>
+  </div>
+</div>
+
+<!-- ③ LESSONS -->
+<div class="pg" id="pg-lessons">
+  <div class="les-hdr">
+    <h2 id="lhdr">📗 دروس الترم الأول</h2>
+    <p id="lsub">تعلم أساسيات البرمجة خطوة بخطوة</p>
+  </div>
+  <div class="term-tabs">
+    <button class="ttab a1" id="tt1" onclick="swTerm(1)">📗 الترم الأول (١٦ فيديو)</button>
+    <button class="ttab"    id="tt2" onclick="swTerm(2)">📘 الترم الثاني (١٢ فيديو)</button>
+  </div>
+  <div class="ll">
+    <div class="lsb">
+      <div class="lsb-t" id="sbt">📗 الترم الأول</div>
+      <div id="sbl"></div>
+    </div>
+    <div class="lcon" id="lcon"></div>
+  </div>
+  <!-- Page-level nav changes depending on current term -->
+  <div class="pnav" id="lessons-pnav">
+    <button class="pnav-btn" onclick="go('login')">← السابق: تسجيل الدخول</button>
+    <div class="pnav-ctr"><div class="pc-l">الخطوة التالية</div><div class="pc-t">📘 الترم الثاني</div></div>
+    <button class="pnav-btn next" onclick="swTerm(2)">التالي: الترم الثاني →</button>
+  </div>
+</div>
+
+<!-- ④ QUIZ -->
+<div class="pg" id="pg-quiz">
+  <div class="quiz-hdr"><h2>🏆 الاختبارات العامة</h2><p>اختبار شامل على الترم الأول والترم الثاني</p></div>
+  <div class="qwrap">
+    <div class="qsel" id="qsel">
+      <div class="qsc" onclick="startQ(1)"><div class="big">📗</div><h3>اختبار الترم الأول</h3><p>١٠ أسئلة متنوعة</p></div>
+      <div class="qsc" onclick="startQ(2)"><div class="big">📘</div><h3>اختبار الترم الثاني</h3><p>١٠ أسئلة متنوعة</p></div>
+    </div>
+    <div class="qbox" id="qbox">
+      <div class="qprog">
+        <span class="qpt" id="qpt">١/١٠</span>
+        <div class="qbw"><div class="qb" id="qbar" style="width:10%"></div></div>
+        <span class="qpt" id="qscr">✅ ٠</span>
+      </div>
+      <div id="qarea"></div>
+      <div class="opts" id="qopts"></div>
+      <div class="qact"><button class="qnxt" id="qnxt" onclick="nextQ()">التالي ←</button></div>
+    </div>
+    <div class="qres" id="qres"></div>
+  </div>
+  <div class="pnav">
+    <button class="pnav-btn" onclick="guardedOpenL(2)">← السابق: الترم الثاني</button>
+    <div class="pnav-ctr"><div class="pc-l">الخطوة التالية</div><div class="pc-t">🎓 الشهادة</div></div>
+    <button class="pnav-btn next" onclick="guardedGo('cert')">التالي: الشهادة →</button>
+  </div>
+</div>
+
+<!-- ⑤ CERTIFICATE -->
+<div class="pg" id="pg-cert">
+  <div class="cpg">
+    <div class="chdr"><h2>🎓 شهادة التقدير</h2><p>أتمم جميع الدروس والاختبارات للحصول على شهادتك</p></div>
+    <div id="cert-c"></div>
+  </div>
+  <div class="pnav">
+    <button class="pnav-btn" onclick="go('quiz')">← السابق: الاختبارات</button>
+    <div class="pnav-ctr"><div class="pc-l">🏁 نهاية الرحلة</div><div class="pc-t">🎉 مبروك!</div></div>
+    <button class="pnav-btn next" onclick="go('home')">العودة للرئيسية 🏠</button>
+  </div>
+</div>
+
+<!-- ⑥ ABOUT -->
+<div class="pg" id="pg-about">
+  <div class="abw">
+    <div class="abc">
+      <h2>💻 عن الموقع</h2>
+      <p>هذا الموقع مصمم خصيصاً لطلاب الصف الثالث الإعدادي لتعلم Visual Basic .NET بطريقة ممتعة وتفاعلية.</p>
+      <p>المنهج مقسم إلى ترمين يشملان جميع المفاهيم الأساسية من الصفر حتى كتابة البرامج الكاملة.</p>
+      <div class="fgrid">
+        <div class="fi2"><div class="fi">📚</div><h4>١٨ درساً</h4><p>محتوى شامل</p></div>
+        <div class="fi2"><div class="fi">💡</div><h4>أمثلة عملية</h4><p>كود حقيقي</p></div>
+        <div class="fi2"><div class="fi">🏆</div><h4>اختبارات</h4><p>قياس الفهم</p></div>
+        <div class="fi2"><div class="fi">🎓</div><h4>شهادات</h4><p>تقدير جهودك</p></div>
+        <div class="fi2"><div class="fi">⭐</div><h4>نقاط</h4><p>نظام تحفيزي</p></div>
+        <div class="fi2"><div class="fi">📱</div><h4>متوافق</h4><p>موبايل وكمبيوتر</p></div>
+      </div>
+    </div>
+    <div class="abc">
+      <h2>📖 كيف تستخدم الموقع؟</h2>
+      <p><strong>١.</strong> سجّل حسابك أو سجّل الدخول إذا كان لديك حساب.</p>
+      <p><strong>٢.</strong> ابدأ بالترم الأول ثم الثاني. استخدم أزرار التالي/السابق للتنقل.</p>
+      <p><strong>٣.</strong> اضغط "إنهاء الدرس" بعد كل درس لكسب ١٠ نقاط.</p>
+      <p><strong>٤.</strong> اجتز اختبار كل ترم لكسب نقاط إضافية.</p>
+      <p><strong>٥.</strong> بعد إنهاء كل شيء تظهر شهادتك للطباعة!</p>
+    </div>
+  </div>
+</div>
+
+<!-- SPLASH OVERLAY -->
+<div class="splash-overlay" id="splashOverlay">
+  <div class="victory-box">
+    <div class="v-trophy">🏆</div>
+    <div class="v-stars">⭐ ⭐ ⭐</div>
+    <div class="v-title">يلا نتعلم!</div>
+    <div class="v-sub">رحلة Visual Basic بتبدأ دلوقتي 🚀</div>
+  </div>
+</div>
+
+<!-- GUARD MODAL -->
+<div class="modal-overlay" id="guardModal">
+  <div class="modal-box">
+    <div class="modal-ic">🔐</div>
+    <h3>سجّل اسمك أولاً!</h3>
+    <p>يجب إدخال اسمك للوصول إلى هذا القسم وتتبع تقدمك في التعلم.</p>
+    <div class="modal-btns">
+      <button class="modal-btn-go" onclick="closeModal();go('login')">✏️ أدخل اسمك الآن</button>
+      <button class="modal-btn-cancel" onclick="closeModal()">رجوع</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════
+//  STATE
+// ══════════════════════════════
+const S={
+  user:JSON.parse(localStorage.getItem('vbu')||'null'),
+  pts:0, done:[], qs:{}, curT:1, curL:0,
+  load(){
+    if(!this.user)return;
+    const d=JSON.parse(localStorage.getItem('vbd_'+this.user.u)||'{}');
+    this.pts=d.pts||0; this.done=d.done||[]; this.qs=d.qs||{};
+  },
+  save(){
+    if(!this.user)return;
+    localStorage.setItem('vbd_'+this.user.u,JSON.stringify({pts:this.pts,done:this.done,qs:this.qs}));
+  }
+};
+const getUsers=()=>JSON.parse(localStorage.getItem('vbus')||'[]');
+const saveUsers=u=>localStorage.setItem('vbus',JSON.stringify(u));
+
+// ══════════════════════════════
+//  LESSONS DATA
+// ══════════════════════════════
+const LS={
+1:[
+ {id:'l1_0',t:'شرح سلسلة منهج الكمبيوتر',s:'مقدمة وتعريف بالمنهج كاملاً',ic:'📋',type:'intro',yt:'https://youtu.be/OCvyuXpSPEI',
+  b:`<h3>مقدمة عن سلسلة منهج الكمبيوتر</h3>
+  <p>في هذا الفيديو التمهيدي يتم شرح كامل محتوى سلسلة منهج الكمبيوتر للصف الثالث الإعدادي، وما الذي ستتعلمه خلال الترم الأول والثاني.</p>
+  <div class="ib bl"><div class="ic">📌</div><p>هذا الفيديو يعطيك نظرة عامة على كل المنهج قبل أن تبدأ الدراسة.</p></div>
+  <h3>ماذا ستتعلم في هذه السلسلة؟</h3>
+  <ul>
+    <li>📐 حل المشكلات وخرائط التدفق</li>
+    <li>💻 برنامج Visual Basic .NET</li>
+    <li>🔧 أدوات التحكم وخصائصها</li>
+    <li>📝 كتابة الكود البرمجي</li>
+    <li>🔢 المتغيرات والعمليات الحسابية</li>
+    <li>🔀 الجمل الشرطية والحلقات التكرارية</li>
+  </ul>
+  <div class="ib gr"><div class="ic">🎯</div><p>شاهد الفيديو أولاً للحصول على صورة كاملة عن المنهج!</p></div>`,c:null,d:null},
+
+ {id:'l1_1',t:'الحصة الأولى: حل المشكلات',s:'مفهوم حل المشكلات في البرمجة',ic:'🧩',type:'lesson',yt:'',
+  b:`<h3>ما هو حل المشكلات؟</h3>
+  <p>حل المشكلات هو أساس البرمجة. قبل أن تكتب أي كود يجب أن تفهم المشكلة جيداً وتضع خطة لحلها.</p>
+  <div class="ib bl"><div class="ic">💡</div><p>البرمجة = تحليل المشكلة + وضع خوارزمية + كتابة الكود</p></div>
+  <h3>خطوات حل المشكلة</h3>
+  <ul>
+    <li><strong>١- تعريف المشكلة:</strong> ما هي المشكلة المطلوب حلها؟</li>
+    <li><strong>٢- تحليل المشكلة:</strong> ما هي المدخلات والمخرجات؟</li>
+    <li><strong>٣- وضع الخوارزمية:</strong> الخطوات المرتبة لحل المشكلة</li>
+    <li><strong>٤- رسم خريطة التدفق:</strong> تمثيل بياني للخوارزمية</li>
+    <li><strong>٥- كتابة الكود:</strong> تحويل الخوارزمية لبرنامج</li>
+    <li><strong>٦- الاختبار:</strong> تجربة البرنامج والتحقق من صحته</li>
+  </ul>
+  <h3>ما هي الخوارزمية؟</h3>
+  <p>مجموعة من الخطوات المرتبة والمحددة لحل مشكلة معينة — مثل وصفة الطبخ!</p>
+  <div class="ib yl"><div class="ic">مثال</div><p><strong>مشكلة:</strong> احسب مجموع عددين<br>١- اقرأ العدد الأول ← ٢- اقرأ العدد الثاني ← ٣- احسب المجموع ← ٤- اعرض النتيجة</p></div>`,c:null,d:null},
+
+ {id:'l1_2',t:'الحصة الثانية: تابع حل المشكلات',s:'تطبيقات على حل المشكلات',ic:'🧩',type:'lesson',yt:'',
+  b:`<h3>تابع حل المشكلات — تطبيقات عملية</h3>
+  <p>نكمل شرح حل المشكلات مع تطبيقات عملية متعددة.</p>
+  <div class="ib bl"><div class="ic">📝</div><p>الخوارزمية نصية — خريطة التدفق بيانية — كلاهما يعبّر عن نفس الحل!</p></div>
+  <h3>أنواع العمليات في الخوارزمية</h3>
+  <ul>
+    <li>📥 <strong>الإدخال:</strong> قراءة البيانات من المستخدم</li>
+    <li>⚙️ <strong>المعالجة:</strong> إجراء الحسابات والمقارنات</li>
+    <li>📤 <strong>الإخراج:</strong> عرض النتائج للمستخدم</li>
+  </ul>
+  <div class="ib yl"><div class="ic">💡</div><p><strong>مثال:</strong> احسب مساحة مستطيل<br>المدخلات: الطول والعرض — المعالجة: المساحة = الطول × العرض — المخرجات: عرض المساحة</p></div>`,c:null,d:null},
+
+ {id:'l1_3',t:'الحصة الثالثة: خرائط التدفق البسيطة',s:'رسم خرائط التدفق للخوارزميات',ic:'📊',type:'lesson',yt:'',
+  b:`<h3>ما هي خريطة التدفق؟</h3>
+  <p>خريطة التدفق (Flowchart) هي رسم بياني يُمثّل خطوات الخوارزمية بأشكال هندسية معيارية.</p>
+  <h3>أشكال خريطة التدفق</h3>
+  <ul>
+    <li>🔷 <strong>البيضاوي:</strong> البداية والنهاية</li>
+    <li>📦 <strong>المستطيل:</strong> عمليات المعالجة والحساب</li>
+    <li>◇ <strong>المعين:</strong> قرارات (شرط صح أو خطأ)</li>
+    <li>📐 <strong>متوازي الأضلاع:</strong> الإدخال والإخراج</li>
+    <li>➡️ <strong>الأسهم:</strong> اتجاه التدفق</li>
+  </ul>
+  <div class="ib gr"><div class="ic">✅</div><p>خريطة التدفق البسيطة تسير من أعلى لأسفل بدون تفرع أو تكرار.</p></div>
+  <div class="diag"><div class="diag-t">📊 مثال: خريطة تدفق لجمع عددين</div>
+    <div style="display:flex;flex-direction:column;align-items:center;font-size:.77rem;font-weight:700;gap:0;">
+      <div style="background:#1e3a8a;color:#fff;padding:7px 22px;border-radius:30px;">البداية</div>
+      <div style="width:2px;height:12px;background:#94a3b8;"></div>
+      <div style="background:#f0f9ff;border:2px solid #2563eb;padding:7px 18px;font-size:.75rem;">اقرأ العدد الأول (أ)</div>
+      <div style="width:2px;height:12px;background:#94a3b8;"></div>
+      <div style="background:#f0f9ff;border:2px solid #2563eb;padding:7px 18px;font-size:.75rem;">اقرأ العدد الثاني (ب)</div>
+      <div style="width:2px;height:12px;background:#94a3b8;"></div>
+      <div style="background:#fff;border:2px solid #94a3b8;padding:7px 18px;">المجموع = أ + ب</div>
+      <div style="width:2px;height:12px;background:#94a3b8;"></div>
+      <div style="background:#f0f9ff;border:2px solid #2563eb;padding:7px 18px;font-size:.75rem;">اطبع المجموع</div>
+      <div style="width:2px;height:12px;background:#94a3b8;"></div>
+      <div style="background:#1e3a8a;color:#fff;padding:7px 22px;border-radius:30px;">النهاية</div>
+    </div>
+  </div>`,c:null,d:null},
+
+ {id:'l1_4',t:'الحصة الرابعة: خرائط التفرع',s:'خرائط التدفق مع القرارات والشروط',ic:'🔀',type:'lesson',yt:'',
+  b:`<h3>ما هي خريطة التفرع؟</h3>
+  <p>خريطة تحتوي على <strong>شرط (قرار)</strong> يُمثَّل بشكل المعين ◇ ويؤدي إلى مسارين: نعم أو لا.</p>
+  <div class="ib bl"><div class="ic">📌</div><p>شكل المعين ◇ يحتوي على سؤال بإجابة نعم/لا أو صح/خطأ</p></div>
+  <div class="diag"><div class="diag-t">🔀 مثال: نجاح أو رسوب</div>
+    <div style="display:flex;flex-direction:column;align-items:center;font-size:.76rem;font-weight:700;gap:0;">
+      <div style="background:#1e3a8a;color:#fff;padding:7px 20px;border-radius:30px;">البداية</div>
+      <div style="width:2px;height:11px;background:#94a3b8;"></div>
+      <div style="background:#f0f9ff;border:2px solid #2563eb;padding:6px 15px;font-size:.74rem;">اقرأ الدرجة</div>
+      <div style="width:2px;height:11px;background:#94a3b8;"></div>
+      <div style="background:#fef3c7;border:2px solid #f59e0b;padding:7px 14px;border-radius:6px;">الدرجة ≥ 50؟</div>
+      <div style="display:flex;gap:46px;margin-top:2px;">
+        <div style="display:flex;flex-direction:column;align-items:center;"><div style="width:2px;height:11px;background:#10b981;"></div><div style="background:#d1fae5;color:#065f46;padding:5px 11px;border-radius:6px;">نعم</div><div style="width:2px;height:7px;background:#10b981;"></div><div style="background:#f0fdf4;border:1.5px solid #10b981;padding:5px 9px;border-radius:6px;">ناجح ✅</div></div>
+        <div style="display:flex;flex-direction:column;align-items:center;"><div style="width:2px;height:11px;background:#ef4444;"></div><div style="background:#fee2e2;color:#7f1d1d;padding:5px 11px;border-radius:6px;">لا</div><div style="width:2px;height:7px;background:#ef4444;"></div><div style="background:#fff5f5;border:1.5px solid #ef4444;padding:5px 9px;border-radius:6px;">راسب ❌</div></div>
+      </div>
+      <div style="width:2px;height:11px;background:#94a3b8;margin-top:7px;"></div>
+      <div style="background:#1e3a8a;color:#fff;padding:7px 20px;border-radius:30px;">النهاية</div>
+    </div>
+  </div>`,c:null,d:null},
+
+ {id:'l1_5',t:'الحصة الخامسة: خرائط التكرار',s:'خرائط التدفق مع الحلقات التكرارية',ic:'🔄',type:'lesson',yt:'',
+  b:`<h3>ما هي خريطة التكرار؟</h3>
+  <p>خريطة تحتوي على <strong>حلقة تكرارية</strong> — جزء منها يتكرر حتى يتحقق شرط معين.</p>
+  <div class="ib bl"><div class="ic">🔄</div><p>في خريطة التكرار يوجد سهم يرجع للخلف — هذه علامة الحلقة التكرارية!</p></div>
+  <h3>نوعان من التكرار</h3>
+  <ul>
+    <li>🔢 <strong>تكرار بعدد محدد:</strong> كرر 10 مرات (For Loop)</li>
+    <li>✅ <strong>تكرار بشرط:</strong> كرر حتى يتحقق شرط (While Loop)</li>
+  </ul>
+  <div class="diag"><div class="diag-t">🔄 مثال: طباعة أرقام من 1 إلى 5</div>
+    <div style="display:flex;flex-direction:column;align-items:center;font-size:.76rem;font-weight:700;gap:0;">
+      <div style="background:#1e3a8a;color:#fff;padding:7px 20px;border-radius:30px;">البداية</div>
+      <div style="width:2px;height:11px;background:#94a3b8;"></div>
+      <div style="background:#fff;border:2px solid #94a3b8;padding:6px 15px;">i = 1</div>
+      <div style="width:2px;height:11px;background:#94a3b8;"></div>
+      <div style="background:#fef3c7;border:2px solid #f59e0b;padding:7px 14px;border-radius:6px;">هل i ≤ 5 ؟</div>
+      <div style="display:flex;gap:44px;margin-top:2px;">
+        <div style="display:flex;flex-direction:column;align-items:center;"><div style="width:2px;height:11px;background:#10b981;"></div><div style="background:#d1fae5;color:#065f46;padding:5px 11px;border-radius:6px;">نعم</div><div style="width:2px;height:7px;background:#10b981;"></div><div style="background:#f0fdf4;border:1.5px solid #10b981;padding:5px 9px;border-radius:6px;text-align:center;">اطبع i<br>i = i+1<br>↑ ارجع</div></div>
+        <div style="display:flex;flex-direction:column;align-items:center;"><div style="width:2px;height:11px;background:#ef4444;"></div><div style="background:#fee2e2;color:#7f1d1d;padding:5px 11px;border-radius:6px;">لا</div><div style="width:2px;height:7px;background:#ef4444;"></div><div style="background:#1e3a8a;color:#fff;padding:7px 15px;border-radius:30px;">النهاية</div></div>
+      </div>
+    </div>
+  </div>`,c:null,d:null},
+
+ {id:'l1_6',t:'الحصة السابعة: أدوات التحكم في VB',s:'أدوات التحكم في Visual Basic',ic:'🧰',type:'lesson',yt:'',
+  b:`<h3>أدوات التحكم في Visual Basic</h3>
+  <p>أدوات التحكم (Controls) هي العناصر التي تضيفها على الـ Form. توجد في صندوق الأدوات <strong>Toolbox</strong>.</p>
+  <h3>أهم أدوات التحكم</h3>
+  <ul>
+    <li>🏷️ <strong>Label</strong> — عرض نصوص ثابتة</li>
+    <li>📝 <strong>TextBox</strong> — إدخال وعرض نصوص</li>
+    <li>🔲 <strong>Button</strong> — زر لتنفيذ أوامر</li>
+    <li>✅ <strong>CheckBox</strong> — اختيار متعدد</li>
+    <li>🔘 <strong>RadioButton</strong> — اختيار واحد من مجموعة</li>
+    <li>📋 <strong>ListBox</strong> — قائمة عناصر</li>
+    <li>🖼️ <strong>PictureBox</strong> — عرض صور</li>
+  </ul>
+  <div class="ib bl"><div class="ic">💡</div><p>لإضافة أي أداة: اسحبها من الـ Toolbox وأفلتها على الـ Form!</p></div>
+  <div class="ib gr"><div class="ic">🔧</div><p>كل أداة لها <strong>Name</strong> يُستخدم في الكود — سمّها بشكل معبّر مثل btnCalculate أو txtName.</p></div>`,c:null,d:null},
+
+ {id:'l1_7',t:'الحصة الثامنة: خصائص أدوات التحكم',s:'التعامل مع خصائص Properties',ic:'⚙️',type:'lesson',yt:'',
+  b:`<h3>ما هي الخصائص (Properties)؟</h3>
+  <p>مواصفات كل أداة — تحدد شكلها وسلوكها مثل الاسم واللون والحجم والنص.</p>
+  <div class="ib bl"><div class="ic">🔧</div><p>نافذة الخصائص تظهر بالضغط على F4 أو كليك يمين → Properties</p></div>
+  <h3>أهم الخصائص المشتركة</h3>
+  <ul>
+    <li><strong>Name</strong> — الاسم في الكود</li>
+    <li><strong>Text</strong> — النص الظاهر</li>
+    <li><strong>Font</strong> — نوع وحجم الخط</li>
+    <li><strong>ForeColor</strong> — لون النص</li>
+    <li><strong>BackColor</strong> — لون الخلفية</li>
+    <li><strong>Size</strong> — الحجم</li>
+    <li><strong>Visible</strong> — إظهار أو إخفاء</li>
+    <li><strong>Enabled</strong> — تفعيل أو تعطيل</li>
+  </ul>
+  <div class="ib yl"><div class="ic">1️⃣</div><p><strong>وقت التصميم:</strong> من نافذة Properties مباشرة</p></div>
+  <div class="ib gr"><div class="ic">2️⃣</div><p><strong>وقت التشغيل:</strong> من خلال كود في محرر الكود</p></div>`,
+  c:`<span class="cm">' تغيير الخصائص من الكود</span>
+Label1.Text = <span class="str">"مرحباً!"</span>
+Label1.ForeColor = Color.Blue
+Label1.Font = <span class="kw">New</span> Font(<span class="str">"Arial"</span>, <span class="nm">14</span>, FontStyle.Bold)
+Button1.Enabled = <span class="kw">False</span>
+TextBox1.Visible = <span class="kw">True</span>`,d:null},
+
+ {id:'l1_8',t:'الحصة التاسعة: نافذة الكود',s:'كتابة الكود البرمجي في Visual Basic',ic:'💻',type:'lesson',yt:'',
+  b:`<h3>ما هي نافذة الكود؟</h3>
+  <p>المكان الذي تكتب فيه الأوامر البرمجية. يمكن الوصول إليها بالنقر المزدوج على أي أداة.</p>
+  <div class="ib bl"><div class="ic">💡</div><p>اضغط <strong>F7</strong> أو انقر مزدوجاً على أي عنصر للوصول السريع لنافذة الكود</p></div>
+  <h3>بنية الكود في VB.NET</h3>
+  <ul>
+    <li>كل برنامج: <strong>Public Class</strong> ... <strong>End Class</strong></li>
+    <li>كل حدث: <strong>Private Sub</strong> ... <strong>End Sub</strong></li>
+  </ul>
+  <h3>أهم الأحداث (Events)</h3>
+  <ul>
+    <li>🖱️ <strong>Click</strong> — عند النقر على الزر</li>
+    <li>🔃 <strong>Load</strong> — عند تشغيل البرنامج</li>
+    <li>📝 <strong>TextChanged</strong> — عند تغيير النص</li>
+  </ul>`,
+  c:`<span class="kw">Public Class</span> <span class="fn">Form1</span>
+    <span class="kw">Private Sub</span> <span class="fn">Form1_Load</span>(...) <span class="kw">Handles MyBase</span>.Load
+        Me.Text = <span class="str">"برنامجي الأول"</span>
+        Label1.Text = <span class="str">"أهلاً بك!"</span>
+    <span class="kw">End Sub</span>
+    <span class="kw">Private Sub</span> <span class="fn">Button1_Click</span>(...) <span class="kw">Handles</span> Button1.Click
+        Label1.Text = <span class="str">"تم النقر على الزر 🎉"</span>
+    <span class="kw">End Sub</span>
+<span class="kw">End Class</span>`,d:null},
+
+ {id:'l1_r1',t:'مراجعة ١',s:'مراجعة شاملة على الترم الأول',ic:'📝',type:'review',yt:'',
+  b:`<h3>مراجعة شاملة — الترم الأول</h3>
+  <p>راجع كل ما تعلمناه في الترم الأول.</p>
+  <div class="ib yl"><div class="ic">📋</div><p>راجع هذه المواضيع جيداً قبل الاختبار:</p></div>
+  <ul>
+    <li>✅ خطوات حل المشكلات والخوارزميات</li>
+    <li>✅ أشكال خرائط التدفق ومعانيها</li>
+    <li>✅ خرائط التفرع (الشرط)</li>
+    <li>✅ خرائط التكرار (الحلقات)</li>
+    <li>✅ أدوات التحكم وخصائصها</li>
+    <li>✅ نافذة الكود والأحداث</li>
+  </ul>
+  <div class="ib gr"><div class="ic">🎯</div><p>بعد مشاهدة المراجعة جرب اختبار الترم الأول!</p></div>`,c:null,d:null},
+
+ {id:'l1_r2',t:'مراجعة ٢',s:'تمارين وأسئلة',ic:'📝',type:'review',yt:'',
+  b:`<h3>مراجعة ٢ — تمارين متنوعة</h3><p>مراجعة إضافية لتثبيت المعلومات وحل تمارين.</p>
+  <div class="ib bl"><div class="ic">💪</div><p>كلما راجعت أكثر كلما أصبحت أفضل في البرمجة!</p></div>`,c:null,d:null},
+
+ {id:'l1_r3',t:'مراجعة ٣',s:'تمارين وأسئلة',ic:'📝',type:'review',yt:'',
+  b:`<h3>مراجعة ٣ — تطبيقات وأسئلة</h3><p>المزيد من التمارين على منهج الترم الأول.</p>
+  <div class="ib yl"><div class="ic">✏️</div><p>حاول حل الأسئلة بنفسك قبل مشاهدة الحل!</p></div>`,c:null,d:null},
+
+ {id:'l1_r4',t:'مراجعة ٤',s:'تمارين وأسئلة',ic:'📝',type:'review',yt:'',
+  b:`<h3>مراجعة ٤</h3><p>مراجعة إضافية للترم الأول.</p>
+  <div class="ib gr"><div class="ic">🌟</div><p>أنت قريب من إنهاء الترم الأول! استمر!</p></div>`,c:null,d:null},
+
+ {id:'l1_r5',t:'مراجعة ٥',s:'تمارين وأسئلة',ic:'📝',type:'review',yt:'',
+  b:`<h3>مراجعة ٥</h3><p>مراجعة شاملة نهائية قبل اختبار الترم الأول.</p>
+  <div class="ib bl"><div class="ic">🎓</div><p>بعد هذه المراجعة أنت جاهز تماماً للاختبار!</p></div>`,c:null,d:null},
+
+ {id:'l1_r6',t:'مراجعة ٦',s:'تمارين وأسئلة',ic:'📝',type:'review',yt:'',
+  b:`<h3>مراجعة ٦</h3><p>مراجعة نهائية وتلخيص أهم النقاط.</p>
+  <div class="ib gr"><div class="ic">✅</div><p>تلخيص: حل المشكلات ← خرائط التدفق ← أدوات التحكم ← الكود</p></div>`,c:null,d:null},
+
+ {id:'l1_r7',t:'مراجعة ٧',s:'تمارين وأسئلة',ic:'📝',type:'review',yt:'',
+  b:`<h3>مراجعة ٧ — المراجعة الأخيرة</h3><p>المراجعة الشاملة الأخيرة للترم الأول.</p>
+  <div class="ib yl"><div class="ic">🏆</div><p>أنت الآن مستعد لاختبار الترم الأول. حظاً موفقاً!</p></div>`,c:null,d:null}
+],
+
+2:[
+ {id:'l2_0',t:'شرح سلسلة منهج الكمبيوتر',s:'مقدمة وتعريف بمنهج الترم الثاني',ic:'📋',type:'intro',yt:'',
+  b:`<h3>مقدمة عن منهج الترم الثاني</h3>
+  <p>في هذا الفيديو التمهيدي يتم شرح محتوى الترم الثاني كاملاً وما الذي ستتعلمه من مفاهيم برمجية متقدمة.</p>
+  <div class="ib bl"><div class="ic">📌</div><p>شاهد هذا الفيديو أولاً للحصول على صورة كاملة عن منهج الترم الثاني.</p></div>
+  <h3>ماذا ستتعلم في الترم الثاني؟</h3>
+  <ul>
+    <li>🗂️ أنواع البيانات المختلفة</li>
+    <li>📦 المتغيرات والثوابت</li>
+    <li>➡️ جملة التخصيص</li>
+    <li>🔀 التفرع (الجمل الشرطية)</li>
+    <li>🔄 التكرار (الحلقات)</li>
+    <li>🔧 الإجراءات (Sub & Function)</li>
+    <li>🛡️ التعدي الإلكتروني والأمان الرقمي</li>
+  </ul>
+  <div class="ib gr"><div class="ic">🎯</div><p>الترم الثاني يبني على ما تعلمته في الترم الأول — تأكد أنك أتممته أولاً!</p></div>`,c:null,d:null},
+
+ {id:'l2_1',t:'الحصة الأولى: أنواع البيانات',s:'أنواع البيانات المختلفة في VB.NET',ic:'🗂️',type:'lesson',yt:'',
+  b:`<h3>أنواع البيانات في VB.NET</h3>
+  <p>نوع البيانات يحدد <strong>شكل البيانات</strong> التي يمكن تخزينها في المتغير وحجمها في الذاكرة.</p>
+  <h3>أنواع البيانات الأساسية</h3>
+  <ul>
+    <li>📝 <strong>String</strong> — نصوص وحروف مثل "أحمد علي"</li>
+    <li>🔢 <strong>Integer</strong> — أعداد صحيحة مثل 15 أو 100</li>
+    <li>💯 <strong>Double</strong> — أعداد عشرية مثل 3.14 أو 87.5</li>
+    <li>✅ <strong>Boolean</strong> — قيمة منطقية True أو False فقط</li>
+    <li>🔤 <strong>Char</strong> — حرف واحد فقط مثل "A"</li>
+    <li>📅 <strong>Date</strong> — تاريخ ووقت</li>
+    <li>🔢 <strong>Long</strong> — أعداد صحيحة كبيرة جداً</li>
+    <li>💰 <strong>Decimal</strong> — أعداد عشرية دقيقة جداً للحسابات المالية</li>
+  </ul>
+  <div class="ib yl"><div class="ic">⚠️</div><p>اختيار النوع الغلط يسبب أخطاء في البرنامج — استخدم Integer للأعداد الصحيحة وDouble للعشرية!</p></div>
+  <div class="ib gr"><div class="ic">💡</div><p>دوال تحويل الأنواع: CInt() — CDbl() — CStr() — CBool()</p></div>`,
+  c:`<span class="cm">' أمثلة على أنواع البيانات</span>
+<span class="kw">Dim</span> name    <span class="kw">As String</span>  = <span class="str">"محمد أحمد"</span>
+<span class="kw">Dim</span> age     <span class="kw">As Integer</span> = <span class="nm">15</span>
+<span class="kw">Dim</span> grade   <span class="kw">As Double</span>  = <span class="nm">87.5</span>
+<span class="kw">Dim</span> passed  <span class="kw">As Boolean</span> = <span class="kw">True</span>
+<span class="kw">Dim</span> initial <span class="kw">As Char</span>    = <span class="str">"M"</span>c
+
+<span class="cm">' تحويل بين الأنواع</span>
+<span class="kw">Dim</span> num <span class="kw">As Integer</span> = <span class="fn">CInt</span>(<span class="str">"42"</span>)   <span class="cm">' نص → عدد صحيح</span>
+<span class="kw">Dim</span> dbl <span class="kw">As Double</span>  = <span class="fn">CDbl</span>(<span class="str">"3.14"</span>) <span class="cm">' نص → عدد عشري</span>
+<span class="kw">Dim</span> txt <span class="kw">As String</span>  = <span class="fn">CStr</span>(<span class="nm">100</span>)    <span class="cm">' عدد → نص</span>`,d:null},
+
+ {id:'l2_2',t:'الحصة الثانية: المتغيرات والثوابت',s:'تخزين البيانات في الذاكرة',ic:'📦',type:'lesson',yt:'',
+  b:`<h3>المتغيرات Variables</h3>
+  <p>المتغير هو <strong>مكان في ذاكرة الحاسوب</strong> له اسم لتخزين قيمة يمكن تغييرها أثناء تشغيل البرنامج.</p>
+  <div class="ib bl"><div class="ic">📌</div><p><strong>صيغة تعريف المتغير:</strong> Dim اسم_المتغير As نوع_البيانات</p></div>
+  <h3>الثوابت Constants</h3>
+  <p>الثابت مثل المتغير لكن <strong>قيمته لا تتغير</strong> بعد تعريفها — يُستخدم للقيم الثابتة مثل Pi أو معدل الضريبة.</p>
+  <div class="ib yl"><div class="ic">📌</div><p><strong>صيغة تعريف الثابت:</strong> Const اسم_الثابت As نوع = القيمة</p></div>
+  <h3>قواعد تسمية المتغيرات والثوابت</h3>
+  <ul>
+    <li>✅ يبدأ بحرف لا برقم</li>
+    <li>✅ لا يحتوي على مسافات أو رموز خاصة</li>
+    <li>✅ لا يكون كلمة محجوزة مثل Dim أو If</li>
+    <li>✅ يكون معبّراً عن محتواه (studentName أفضل من x)</li>
+  </ul>`,
+  c:`<span class="cm">' تعريف المتغيرات</span>
+<span class="kw">Dim</span> studentName <span class="kw">As String</span> = <span class="str">"أحمد"</span>
+<span class="kw">Dim</span> age          <span class="kw">As Integer</span> = <span class="nm">15</span>
+<span class="kw">Dim</span> score        <span class="kw">As Double</span>
+
+<span class="cm">' تعريف الثوابت</span>
+<span class="kw">Const</span> PI         <span class="kw">As Double</span>  = <span class="nm">3.14159</span>
+<span class="kw">Const</span> MAX_SCORE  <span class="kw">As Integer</span> = <span class="nm">100</span>
+<span class="kw">Const</span> SCHOOL     <span class="kw">As String</span>  = <span class="str">"مدرسة النيل"</span>
+
+<span class="cm">' استخدامها</span>
+score = <span class="nm">87.5</span>
+lblResult.Text = studentName & <span class="str">" - درجته: "</span> & score
+lblPi.Text = <span class="str">"π = "</span> & PI`,d:null},
+
+ {id:'l2_3',t:'الحصة الثالثة: جملة التخصيص',s:'إسناد القيم للمتغيرات',ic:'➡️',type:'lesson',yt:'',
+  b:`<h3>ما هي جملة التخصيص؟</h3>
+  <p>جملة التخصيص (Assignment Statement) هي الجملة التي تُسند قيمة لمتغير. تستخدم علامة <strong>=</strong> للإسناد.</p>
+  <div class="ib bl"><div class="ic">📌</div><p><strong>الصيغة:</strong> اسم_المتغير = القيمة أو التعبير</p></div>
+  <div class="ib yl"><div class="ic">⚠️</div><p>علامة = في البرمجة تعني الإسناد وليس المساواة الرياضية!</p></div>
+  <h3>أمثلة على جملة التخصيص</h3>
+  <ul>
+    <li>x = 5 ← ضع القيمة 5 في المتغير x</li>
+    <li>x = x + 1 ← زد قيمة x بمقدار 1</li>
+    <li>name = txtName.Text ← اقرأ من TextBox وخزّن في name</li>
+    <li>lblResult.Text = "مرحباً" ← اكتب في Label</li>
+  </ul>
+  <h3>العمليات الحسابية في التخصيص</h3>
+  <ul>
+    <li>➕ <strong>+</strong> الجمع &nbsp;&nbsp; ➖ <strong>-</strong> الطرح</li>
+    <li>✖️ <strong>*</strong> الضرب &nbsp;&nbsp; ➗ <strong>/</strong> القسمة</li>
+    <li>📊 <strong>Mod</strong> باقي القسمة &nbsp;&nbsp; 📐 <strong>^</strong> الأس</li>
+    <li>🔢 <strong>\</strong> القسمة الصحيحة</li>
+  </ul>`,
+  c:`<span class="cm">' جمل تخصيص بسيطة</span>
+<span class="kw">Dim</span> x <span class="kw">As Integer</span> = <span class="nm">10</span>
+<span class="kw">Dim</span> y <span class="kw">As Integer</span> = <span class="nm">3</span>
+<span class="kw">Dim</span> result <span class="kw">As Double</span>
+
+result = x + y      <span class="cm">' 13</span>
+result = x * y      <span class="cm">' 30</span>
+result = x / y      <span class="cm">' 3.333</span>
+result = x \ y      <span class="cm">' 3 (صحيحة)</span>
+result = x <span class="kw">Mod</span> y    <span class="cm">' 1 (الباقي)</span>
+result = x ^ <span class="nm">2</span>      <span class="cm">' 100</span>
+
+<span class="cm">' جملة تخصيص من واجهة المستخدم</span>
+<span class="kw">Dim</span> num1 <span class="kw">As Double</span> = <span class="fn">CDbl</span>(txtNum1.Text)
+<span class="kw">Dim</span> num2 <span class="kw">As Double</span> = <span class="fn">CDbl</span>(txtNum2.Text)
+<span class="kw">Dim</span> avg  <span class="kw">As Double</span> = (num1 + num2) / <span class="nm">2</span>
+lblAvg.Text = <span class="str">"المعدل = "</span> & avg`,d:null},
+
+ {id:'l2_4',t:'الحصة الخامسة: التفرع',s:'الجمل الشرطية واتخاذ القرارات',ic:'🔀',type:'lesson',yt:'',
+  b:`<h3>ما هو التفرع؟</h3>
+  <p>التفرع (Selection) يجعل البرنامج يتخذ <strong>قرارات مختلفة</strong> بناءً على شروط. له نوعان رئيسيان في VB.NET.</p>
+  <h3>النوع الأول: جملة If</h3>
+  <div class="ib bl"><div class="ic">📌</div><p>If الشرط Then ... ElseIf شرط آخر Then ... Else ... End If</p></div>
+  <h3>النوع الثاني: جملة Select Case</h3>
+  <div class="ib bl"><div class="ic">📌</div><p>Select Case المتغير ... Case قيمة ... Case Else ... End Select</p></div>
+  <h3>مشغلات المقارنة</h3>
+  <ul>
+    <li><strong>=</strong> يساوي &nbsp; <strong>&lt;&gt;</strong> لا يساوي</li>
+    <li><strong>&gt;</strong> أكبر من &nbsp; <strong>&lt;</strong> أصغر من</li>
+    <li><strong>&gt;=</strong> أكبر أو يساوي &nbsp; <strong>&lt;=</strong> أصغر أو يساوي</li>
+  </ul>
+  <h3>المشغلات المنطقية</h3>
+  <ul>
+    <li><strong>And</strong> — الشرطان محققان معاً</li>
+    <li><strong>Or</strong> — أحد الشرطين محقق</li>
+    <li><strong>Not</strong> — عكس الشرط</li>
+  </ul>`,
+  c:`<span class="cm">' جملة If — تحديد التقدير</span>
+<span class="kw">Dim</span> score <span class="kw">As Integer</span> = <span class="fn">CInt</span>(txtScore.Text)
+
+<span class="kw">If</span> score >= <span class="nm">90</span> <span class="kw">Then</span>
+    lblGrade.Text = <span class="str">"ممتاز 🌟"</span>
+<span class="kw">ElseIf</span> score >= <span class="nm">75</span> <span class="kw">Then</span>
+    lblGrade.Text = <span class="str">"جيد جداً ✅"</span>
+<span class="kw">ElseIf</span> score >= <span class="nm">50</span> <span class="kw">Then</span>
+    lblGrade.Text = <span class="str">"مقبول 📝"</span>
+<span class="kw">Else</span>
+    lblGrade.Text = <span class="str">"راسب ❌"</span>
+<span class="kw">End If</span>
+
+<span class="cm">' جملة Select Case — تحديد اليوم</span>
+<span class="kw">Select Case</span> day
+    <span class="kw">Case</span> <span class="nm">1</span> : lblDay.Text = <span class="str">"الأحد"</span>
+    <span class="kw">Case</span> <span class="nm">2</span> : lblDay.Text = <span class="str">"الاثنين"</span>
+    <span class="kw">Case</span> <span class="nm">6</span>, <span class="nm">7</span> : lblDay.Text = <span class="str">"عطلة 🎉"</span>
+    <span class="kw">Case Else</span> : lblDay.Text = <span class="str">"يوم عادي"</span>
+<span class="kw">End Select</span>`,d:'if'},
+
+ {id:'l2_5',t:'الحصة السادسة: التكرار',s:'الحلقات التكرارية في VB.NET',ic:'🔄',type:'lesson',yt:'',
+  b:`<h3>ما هو التكرار؟</h3>
+  <p>التكرار (Repetition/Loop) يجعل البرنامج <strong>يكرر مجموعة أوامر</strong> أكثر من مرة بدون كتابتها مراراً.</p>
+  <h3>أنواع الحلقات في VB.NET</h3>
+  <h3>١- حلقة For...Next</h3>
+  <div class="ib bl"><div class="ic">📌</div><p>تُستخدم عندما تعرف عدد التكرارات مسبقاً</p></div>
+  <h3>٢- حلقة While...End While</h3>
+  <div class="ib bl"><div class="ic">📌</div><p>تُستخدم عندما لا تعرف عدد التكرارات — تستمر طالما الشرط صحيح</p></div>
+  <h3>٣- حلقة Do...Loop</h3>
+  <div class="ib yl"><div class="ic">📌</div><p>تُنفّذ الكود مرة على الأقل ثم تفحص الشرط</p></div>
+  <div class="ib gr"><div class="ic">⚠️</div><p>احذر الحلقة اللانهائية! تأكد دائماً من وجود شرط للخروج من الحلقة.</p></div>`,
+  c:`<span class="cm">' حلقة For — طباعة 1 إلى 10</span>
+<span class="kw">For</span> i = <span class="nm">1</span> <span class="kw">To</span> <span class="nm">10</span>
+    lstOut.Items.Add(<span class="str">"الرقم: "</span> & i)
+<span class="kw">Next</span>
+
+<span class="cm">' حلقة For — بخطوة 2</span>
+<span class="kw">For</span> i = <span class="nm">2</span> <span class="kw">To</span> <span class="nm">10</span> <span class="kw">Step</span> <span class="nm">2</span>
+    lstOut.Items.Add(i) <span class="cm">' 2,4,6,8,10</span>
+<span class="kw">Next</span>
+
+<span class="cm">' حلقة While</span>
+<span class="kw">Dim</span> count <span class="kw">As Integer</span> = <span class="nm">1</span>
+<span class="kw">While</span> count <= <span class="nm">5</span>
+    lstOut.Items.Add(count)
+    count += <span class="nm">1</span>
+<span class="kw">End While</span>
+
+<span class="cm">' Do While Loop</span>
+<span class="kw">Do While</span> count <= <span class="nm">5</span>
+    lstOut.Items.Add(count)
+    count += <span class="nm">1</span>
+<span class="kw">Loop</span>`,d:'for'},
+
+ {id:'l2_6',t:'الحصة السابعة: الإجراءات',s:'Sub و Function في VB.NET',ic:'🔧',type:'lesson',yt:'',
+  b:`<h3>ما هي الإجراءات؟</h3>
+  <p>الإجراءات (Procedures) هي كتل من الكود لها اسم يمكن استدعاؤها من أي مكان في البرنامج. تساعد على <strong>تنظيم الكود وإعادة استخدامه</strong>.</p>
+  <h3>نوعان من الإجراءات</h3>
+  <div class="ib bl"><div class="ic">1️⃣</div><p><strong>Sub (إجراء):</strong> ينفذ مجموعة أوامر ولا يُرجع قيمة</p></div>
+  <div class="ib gr"><div class="ic">2️⃣</div><p><strong>Function (دالة):</strong> تنفذ أوامر و<strong>تُرجع قيمة</strong> للاستخدام</p></div>
+  <h3>فوائد الإجراءات</h3>
+  <ul>
+    <li>✅ تنظيم الكود وجعله أوضح</li>
+    <li>✅ إعادة استخدام الكود بدون تكرار</li>
+    <li>✅ سهولة إيجاد الأخطاء وتصحيحها</li>
+    <li>✅ تقسيم البرنامج الكبير لأجزاء صغيرة</li>
+  </ul>`,
+  c:`<span class="cm">' Sub (إجراء) — لا يُرجع قيمة</span>
+<span class="kw">Sub</span> <span class="fn">ShowWelcome</span>(name <span class="kw">As String</span>)
+    lblMsg.Text = <span class="str">"أهلاً وسهلاً يا "</span> & name & <span class="str">" 🎉"</span>
+    lblMsg.ForeColor = Color.DarkBlue
+<span class="kw">End Sub</span>
+
+<span class="cm">' استدعاء الـ Sub</span>
+<span class="fn">ShowWelcome</span>(txtName.Text)
+
+<span class="cm">' Function (دالة) — تُرجع قيمة</span>
+<span class="kw">Function</span> <span class="fn">CalcAverage</span>(a <span class="kw">As Double</span>, b <span class="kw">As Double</span>) <span class="kw">As Double</span>
+    <span class="kw">Return</span> (a + b) / <span class="nm">2</span>
+<span class="kw">End Function</span>
+
+<span class="cm">' استخدام الدالة</span>
+<span class="kw">Dim</span> avg <span class="kw">As Double</span> = <span class="fn">CalcAverage</span>(<span class="nm">80</span>, <span class="nm">90</span>)
+lblAvg.Text = <span class="str">"المعدل: "</span> & avg <span class="cm">' 85</span>`,d:null},
+
+ {id:'l2_7',t:'الحصة الثامنة: التعدي الإلكتروني',s:'الأمان الرقمي والتعدي الإلكتروني',ic:'🛡️',type:'lesson',yt:'',
+  b:`<h3>ما هو التعدي الإلكتروني؟</h3>
+  <p>التعدي الإلكتروني (Cybercrime) هو أي فعل غير قانوني يُرتكب باستخدام الحاسوب أو الإنترنت بهدف الإيذاء أو السرقة أو الاحتيال.</p>
+  <div class="ib yl"><div class="ic">⚠️</div><p>التعدي الإلكتروني جريمة يعاقب عليها القانون في مصر وجميع دول العالم!</p></div>
+  <h3>أنواع التعدي الإلكتروني</h3>
+  <ul>
+    <li>🦠 <strong>الفيروسات والبرامج الضارة:</strong> برامج تتلف جهازك أو تسرق بياناتك</li>
+    <li>🎣 <strong>التصيد الاحتيالي (Phishing):</strong> رسائل مزيفة لسرقة كلمات المرور</li>
+    <li>🔒 <strong>اختراق الحسابات (Hacking):</strong> الدخول غير المصرح لحسابات الآخرين</li>
+    <li>😢 <strong>التنمر الإلكتروني (Cyberbullying):</strong> الإيذاء والمضايقة عبر الإنترنت</li>
+    <li>📧 <strong>البريد المزعج (Spam):</strong> رسائل غير مرغوبة</li>
+  </ul>
+  <h3>كيف تحمي نفسك؟</h3>
+  <ul>
+    <li>🔑 استخدم كلمات مرور قوية وغيّرها بانتظام</li>
+    <li>🔒 لا تشارك بياناتك الشخصية مع أي أحد</li>
+    <li>🛡️ ثبّت برنامج مضاد للفيروسات</li>
+    <li>🔗 لا تضغط على روابط مجهولة المصدر</li>
+    <li>📱 لا تنشر صور أو معلومات شخصية على الإنترنت</li>
+  </ul>
+  <div class="ib gr"><div class="ic">📞</div><p>في حالة التعرض للتعدي الإلكتروني: أخبر والديك أو معلمك فوراً وتوجه للسلطات المختصة.</p></div>`,c:null,d:null},
+
+ {id:'l2_r1',t:'مراجعة ١',s:'مراجعة شاملة على الترم الثاني',ic:'📝',type:'review',yt:'',
+  b:`<h3>مراجعة شاملة — الترم الثاني</h3>
+  <p>راجع كل ما تعلمناه في الترم الثاني.</p>
+  <div class="ib yl"><div class="ic">📋</div><p>راجع هذه المواضيع جيداً قبل الاختبار:</p></div>
+  <ul>
+    <li>✅ أنواع البيانات المختلفة</li>
+    <li>✅ المتغيرات والثوابت وكيفية تعريفها</li>
+    <li>✅ جملة التخصيص والعمليات الحسابية</li>
+    <li>✅ جمل التفرع (If و Select Case)</li>
+    <li>✅ الحلقات التكرارية (For و While)</li>
+    <li>✅ الإجراءات (Sub و Function)</li>
+    <li>✅ التعدي الإلكتروني وكيفية الحماية منه</li>
+  </ul>
+  <div class="ib gr"><div class="ic">🎯</div><p>بعد مشاهدة المراجعة، جرب اختبار الترم الثاني!</p></div>`,c:null,d:null},
+
+ {id:'l2_r2',t:'مراجعة ٢',s:'تمارين وأسئلة',ic:'📝',type:'review',yt:'',
+  b:`<h3>مراجعة ٢ — تمارين متنوعة</h3>
+  <p>مراجعة إضافية لتثبيت مفاهيم الترم الثاني.</p>
+  <div class="ib bl"><div class="ic">💪</div><p>حل الأمثلة العملية أفضل طريقة للمذاكرة!</p></div>`,c:null,d:null},
+
+ {id:'l2_r3',t:'مراجعة ٣',s:'تمارين وأسئلة',ic:'📝',type:'review',yt:'',
+  b:`<h3>مراجعة ٣ — تطبيقات وأسئلة</h3>
+  <p>المزيد من الأسئلة والتطبيقات على منهج الترم الثاني.</p>
+  <div class="ib yl"><div class="ic">✏️</div><p>ارسم خرائط تدفق للمسائل قبل كتابة الكود!</p></div>`,c:null,d:null},
+
+ {id:'l2_r4',t:'مراجعة ٤',s:'المراجعة النهائية',ic:'📝',type:'review',yt:'',
+  b:`<h3>مراجعة ٤ — المراجعة النهائية</h3>
+  <p>المراجعة الشاملة الأخيرة للترم الثاني قبل الاختبار.</p>
+  <div class="ib gr"><div class="ic">🏆</div><p>أنت الآن مستعد تماماً لاختبار الترم الثاني. حظاً موفقاً! 🎉</p></div>`,c:null,d:null}
+]};
+
+// ══════════════════════════════
+//  LESSON RENDER
+// ══════════════════════════════
+function refreshL(){
+  const t=S.curT;
+  document.getElementById('lhdr').textContent=t===1?'📗 دروس الترم الأول':'📘 دروس الترم الثاني';
+  document.getElementById('lsub').textContent=t===1?'تعلم أساسيات البرمجة خطوة بخطوة':'البرمجة المتقدمة والهياكل';
+  document.getElementById('sbt').textContent=t===1?'📗 الترم الأول':'📘 الترم الثاني';
+  document.getElementById('tt1').className='ttab'+(t===1?' a1':'');
+  document.getElementById('tt2').className='ttab'+(t===2?' a2':'');
+  buildSB();
+}
+
+function buildSB(){
+  const ls=LS[S.curT];
+  document.getElementById('sbl').innerHTML=ls.map((l,i)=>{
+    const done=S.done.includes(l.id);
+    const isRev=l.type==='review';
+    const isIntro=l.type==='intro';
+    let cls=S.curT===1?'v1':'v2';
+    if(isRev) cls+=' rev';
+    const numDisp=isRev?'📝':(isIntro?'🎬':(i+1));
+    return`<div class="litm ${cls} ${i===S.curL?'on':''}" onclick="showL(${i})">
+      <div class="lnum">${numDisp}</div>
+      <span style="flex:1">${l.t}</span>
+      ${done?'<span class="chk">✓</span>':''}
+    </div>`;
+  }).join('');
+}
+
+const DIAGS={
+vs:`<div class="diag"><div class="diag-t">🖥️ واجهة Visual Studio</div>
+  <div style="display:grid;grid-template-columns:1fr 3fr 1fr;gap:4px;max-width:480px;margin:0 auto;background:#e2e8f0;padding:4px;border-radius:8px;direction:ltr;font-size:.74rem;">
+    <div style="background:#1e40af;color:#fff;padding:8px;border-radius:4px;text-align:center;font-weight:700;grid-column:1/-1;">Menu Bar — File  Edit  View  Project  Build  Debug</div>
+    <div style="background:#dbeafe;padding:8px;border-radius:4px;text-align:center;font-weight:700;color:#1e3a8a;">Toolbox<br>📦<br>Controls</div>
+    <div style="background:#f8faff;padding:12px;border-radius:4px;text-align:center;border:2px dashed #94a3b8;font-weight:700;color:#475569;">Form Designer<br>🎨<br>Visual Area</div>
+    <div style="background:#d1fae5;padding:8px;border-radius:4px;text-align:center;font-weight:700;color:#065f46;">Properties<br>⚙️</div>
+  </div></div>`,
+form:`<div class="diag"><div class="diag-t">🪟 شكل الفورم</div>
+  <div class="fmock"><div class="ftbar"><span>Form1 - VB App</span><div class="tbtns"><div class="tbtn" style="background:#f59e0b"></div><div class="tbtn" style="background:#10b981"></div><div class="tbtn" style="background:#ef4444"></div></div></div>
+  <div class="fbody" style="height:100px;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:.78rem;">📐 منطقة تصميم الفورم<br>اسحب العناصر هنا</div></div></div>`,
+firstapp:`<div class="diag"><div class="diag-t">🚀 شكل برنامج الترحيب</div>
+  <div class="fmock"><div class="ftbar"><span>برنامج الترحيب</span><div class="tbtns"><div class="tbtn" style="background:#f59e0b"></div><div class="tbtn" style="background:#10b981"></div><div class="tbtn" style="background:#ef4444"></div></div></div>
+  <div class="fbody"><div class="mlbl">أدخل اسمك:</div><input class="mtb" placeholder="محمد أحمد" readonly><button class="mbtn">ارحب بي! 👋</button>
+  <div style="margin-top:8px;font-size:.76rem;color:#2563eb;font-weight:700;">مرحباً بك يا محمد! 🎉</div></div></div></div>`,
+if:`<div class="diag"><div class="diag-t">🔀 مخطط جملة If</div>
+  <div style="display:flex;flex-direction:column;align-items:center;font-size:.76rem;font-weight:700;gap:0;">
+    <div style="background:#1e3a8a;color:#fff;padding:7px 18px;border-radius:6px;">البداية</div>
+    <div style="width:2px;height:16px;background:#94a3b8;"></div>
+    <div style="background:#fef3c7;border:2px solid #f59e0b;padding:7px 14px;border-radius:30px;">هل الشرط محقق؟</div>
+    <div style="display:flex;gap:34px;align-items:flex-start;">
+      <div style="display:flex;flex-direction:column;align-items:center;"><div style="width:2px;height:14px;background:#10b981;"></div><div style="background:#d1fae5;color:#065f46;padding:5px 12px;border-radius:6px;">نعم ✅</div><div style="width:2px;height:8px;background:#10b981;"></div><div style="background:#f0fdf4;border:1.5px solid #10b981;padding:5px 10px;border-radius:6px;">نفّذ Then</div></div>
+      <div style="display:flex;flex-direction:column;align-items:center;"><div style="width:2px;height:14px;background:#ef4444;"></div><div style="background:#fee2e2;color:#7f1d1d;padding:5px 12px;border-radius:6px;">لا ❌</div><div style="width:2px;height:8px;background:#ef4444;"></div><div style="background:#fff5f5;border:1.5px solid #ef4444;padding:5px 10px;border-radius:6px;">نفّذ Else</div></div>
+    </div>
+    <div style="width:2px;height:16px;background:#94a3b8;margin-top:8px;"></div>
+    <div style="background:#1e3a8a;color:#fff;padding:7px 18px;border-radius:6px;">End If</div>
+  </div></div>`,
+for:`<div class="diag"><div class="diag-t">🔄 مخطط حلقة For</div>
+  <div style="display:flex;flex-direction:column;align-items:center;font-size:.76rem;font-weight:700;">
+    <div style="background:#1e3a8a;color:#fff;padding:7px 17px;border-radius:6px;">For i = 1 To 10</div>
+    <div style="width:2px;height:14px;background:#94a3b8;"></div>
+    <div style="background:#fef3c7;border:2px solid #f59e0b;padding:7px 14px;border-radius:30px;">هل i ≤ 10 ؟</div>
+    <div style="display:flex;gap:38px;align-items:flex-start;">
+      <div style="display:flex;flex-direction:column;align-items:center;"><div style="width:2px;height:14px;background:#10b981;"></div><div style="background:#d1fae5;color:#065f46;padding:5px 12px;border-radius:6px;">نعم</div><div style="width:2px;height:8px;background:#10b981;"></div><div style="background:#f0fdf4;border:1.5px solid #10b981;padding:5px 10px;border-radius:6px;text-align:center;">نفّذ الكود<br>↓ i+=1<br>↑ كرر</div></div>
+      <div style="display:flex;flex-direction:column;align-items:center;"><div style="width:2px;height:14px;background:#ef4444;"></div><div style="background:#fee2e2;color:#7f1d1d;padding:5px 12px;border-radius:6px;">لا</div><div style="width:2px;height:8px;background:#ef4444;"></div><div style="background:#1e3a8a;color:#fff;padding:7px 13px;border-radius:6px;">Next / خروج</div></div>
+    </div>
+  </div></div>`,
+while:`<div class="diag"><div class="diag-t">⭕ مخطط حلقة While</div>
+  <div style="display:flex;flex-direction:column;align-items:center;font-size:.76rem;font-weight:700;">
+    <div style="background:#1e3a8a;color:#fff;padding:7px 17px;border-radius:6px;">While الشرط</div>
+    <div style="width:2px;height:14px;background:#94a3b8;"></div>
+    <div style="background:#fef3c7;border:2px solid #f59e0b;padding:7px 14px;border-radius:30px;">هل الشرط صحيح؟</div>
+    <div style="display:flex;gap:38px;align-items:flex-start;">
+      <div style="display:flex;flex-direction:column;align-items:center;"><div style="width:2px;height:14px;background:#10b981;"></div><div style="background:#d1fae5;color:#065f46;padding:5px 12px;border-radius:6px;">نعم</div><div style="width:2px;height:8px;background:#10b981;"></div><div style="background:#f0fdf4;border:1.5px solid #10b981;padding:5px 12px;border-radius:6px;text-align:center;">نفّذ الكود<br>↑ عُد للشرط</div></div>
+      <div style="display:flex;flex-direction:column;align-items:center;"><div style="width:2px;height:14px;background:#ef4444;"></div><div style="background:#fee2e2;color:#7f1d1d;padding:5px 12px;border-radius:6px;">لا</div><div style="width:2px;height:8px;background:#ef4444;"></div><div style="background:#1e3a8a;color:#fff;padding:7px 13px;border-radius:6px;">End While</div></div>
+    </div>
+  </div></div>`
+};
+
+// ══════════════════════════════
+//  ROUTING
+// ══════════════════════════════
+const PMAP={home:'pg-home',login:'pg-login',lessons:'pg-lessons',quiz:'pg-quiz',cert:'pg-cert',about:'pg-about'};
+const TMAP={home:'t-home',login:'t-login',quiz:'t-quiz',cert:'t-cert',about:'t-about'};
+const BMAP={home:'b-home',login:'b-login',quiz:'b-quiz',cert:'b-cert'};
+
+function go(page){
+  Object.values(PMAP).forEach(id=>document.getElementById(id).classList.remove('on'));
+  document.getElementById(PMAP[page]||'pg-home').classList.add('on');
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.bb').forEach(b=>b.classList.remove('on'));
+  if(TMAP[page]) document.getElementById(TMAP[page])?.classList.add('on');
+  if(BMAP[page]) document.getElementById(BMAP[page])?.classList.add('on');
+  if(page==='cert') renderCert();
+  if(page==='lessons') setTimeout(updateLessonsPnav,50);
+  window.scrollTo(0,0);
+}
+
+function openL(term){
+  S.curT=term; S.curL=0;
+  Object.values(PMAP).forEach(id=>document.getElementById(id).classList.remove('on'));
+  document.getElementById('pg-lessons').classList.add('on');
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.bb').forEach(b=>b.classList.remove('on'));
+  document.getElementById(term===1?'t-l1':'t-l2').classList.add('on');
+  document.getElementById(term===1?'b-l1':'b-l2').classList.add('on');
+  refreshL(); showL(0); updateLessonsPnav(); window.scrollTo(0,0);
+}
+
+function swTerm(t){
+  S.curT=t; S.curL=0;
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.bb').forEach(b=>b.classList.remove('on'));
+  document.getElementById(t===1?'t-l1':'t-l2').classList.add('on');
+  document.getElementById(t===1?'b-l1':'b-l2').classList.add('on');
+  refreshL(); showL(0); updateLessonsPnav();
+}
+
+function updateLessonsPnav(){
+  const pnav=document.getElementById('lessons-pnav');
+  if(!pnav) return;
+  if(S.curT===1){
+    pnav.innerHTML=`
+      <button class="pnav-btn" onclick="go('login')">← السابق: تسجيل الدخول</button>
+      <div class="pnav-ctr"><div class="pc-l">الخطوة التالية</div><div class="pc-t">📘 الترم الثاني</div></div>
+      <button class="pnav-btn next" onclick="swTerm(2)">التالي: الترم الثاني →</button>`;
+  } else {
+    pnav.innerHTML=`
+      <button class="pnav-btn" onclick="swTerm(1)">← السابق: الترم الأول</button>
+      <div class="pnav-ctr"><div class="pc-l">الخطوة التالية</div><div class="pc-t">🏆 الاختبارات</div></div>
+      <button class="pnav-btn next" onclick="guardedGo('quiz')">التالي: الاختبارات →</button>`;
+  }
+}
+
+// ══════════════════════════════
+//  GUARD (حماية الصفحات)
+// ══════════════════════════════
+function requireLogin(){
+  if(S.user){ openL(1); return; }
+  showModal();
+}
+function guardedGo(page){
+  if(S.user){ go(page); return; }
+  showModal();
+}
+function guardedOpenL(term){
+  if(S.user){ openL(term); return; }
+  showModal();
+}
+function showModal(){
+  document.getElementById('guardModal').classList.add('show');
+}
+function closeModal(){
+  document.getElementById('guardModal').classList.remove('show');
+}
+// close modal on overlay click
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('guardModal').addEventListener('click',function(e){
+    if(e.target===this) closeModal();
+  });
+});
+
+function showL(idx){
+  S.curL=idx;
+  const ls=LS[S.curT], l=ls[idx];
+  buildSB();
+
+  const isRev = l.type==='review';
+  const isIntro = l.type==='intro';
+  const bg = isRev ? 'bgr' : (S.curT===1 ? 'bg1' : 'bg2');
+  const termN = S.curT===1 ? 'الترم الأول' : 'الترم الثاني';
+  const done = S.done.includes(l.id);
+
+  // YouTube button
+  const ytH = l.yt
+    ? `<a class="yt-btn" href="${l.yt}" target="_blank" rel="noopener"><span class="yt-ic">▶</span> شاهد الفيديو على يوتيوب</a>`
+    : (isRev || l.yt==='' ? `<div style="background:#f8faff;border:2px dashed #cbd5e1;border-radius:10px;padding:11px 15px;margin:13px 0;font-size:.82rem;color:#94a3b8;font-weight:600;">🎬 سيتم إضافة رابط الفيديو قريباً</div>` : '');
+
+  const codeH = l.c ? `<div class="cbox"><div class="chd"><div class="cdl"><div class="cd r"></div><div class="cd y"></div><div class="cd g"></div></div><span class="clg">VB.NET</span></div><pre class="cpre">${l.c}</pre></div>` : '';
+  const diagH = l.d ? (DIAGS[l.d]||'') : '';
+
+  // Prev / Next
+  let prevH='', nextH='';
+  if(idx>0){
+    prevH=`<button class="lnav-btn" onclick="showL(${idx-1})">← ${ls[idx-1].t}</button>`;
+  } else if(S.curT===2){
+    prevH=`<button class="lnav-btn" onclick="swTerm(1);setTimeout(()=>showL(${LS[1].length-1}),50)">← الترم الأول</button>`;
+  } else {
+    prevH=`<button class="lnav-btn" onclick="go('login')">← أدخل اسمك</button>`;
+  }
+  if(idx<ls.length-1){
+    nextH=`<button class="lnav-btn nxt" onclick="showL(${idx+1})">${ls[idx+1].t} →</button>`;
+  } else if(S.curT===1){
+    nextH=`<button class="lnav-btn nxt" onclick="swTerm(2)">الترم الثاني →</button>`;
+  } else {
+    nextH=`<button class="lnav-btn nxt" onclick="go('quiz')">الاختبارات →</button>`;
+  }
+
+  document.getElementById('lcon').innerHTML=`
+    <div class="lbread"><span>🏠</span> › <span>${termN}</span> › <span>${l.t}</span></div>
+    <div class="ltop">
+      <div class="lbigic ${bg}">${l.ic}</div>
+      <div><h2>${l.t}</h2><p>${l.s}</p></div>
+    </div>
+    ${ytH}
+    <div class="lbody">${l.b}</div>
+    ${codeH}${diagH}
+    <div class="lnav">
+      ${prevH}
+      ${done
+        ? `<span style="color:var(--g);font-weight:800;font-size:.88rem;">✅ تم إنهاء هذا الدرس!</span>`
+        : `<button class="done-btn" onclick="completeL('${l.id}')">✅ إنهاء • +١٠ نقاط</button>`}
+      ${nextH}
+    </div>`;
+}
+
+function completeL(id){
+  if(!S.done.includes(id)){
+    S.done.push(id); S.pts+=10; S.save(); updUI();
+    toast('🎉 أحسنت! كسبت ١٠ نقاط! أكمل رحلتك 🚀','g');
+    // refresh
+    const idx=LS[S.curT].findIndex(l=>l.id===id);
+    if(idx>=0)showL(idx);
+    buildSB();
+    checkAll();
+  }
+}
+
+function checkAll(){
+  const all=[...LS[1],...LS[2]].map(l=>l.id);
+  if(all.every(id=>S.done.includes(id)))
+    setTimeout(()=>toast('🏆 أتممت جميع الدروس! تحقق من شهادتك 🎓','o'),1600);
+}
+
+// ══════════════════════════════
+//  QUIZ
+// ══════════════════════════════
+const QD={
+1:[
+  {q:'ما هو Visual Studio؟',t:'mc',o:['برنامج رسم','بيئة التطوير لكتابة الكود','متصفح إنترنت','برنامج مونتاج'],a:1},
+  {q:'ما هو الـ Form في VB.NET؟',t:'mc',o:['نوع متغير','قاعدة بيانات','نافذة البرنامج الرئيسية','لغة برمجة'],a:2},
+  {q:'أداة Label تُستخدم لإدخال البيانات من المستخدم.',t:'tf',o:['صحيح','خطأ'],a:1},
+  {q:'ما خاصية TextBox لإخفاء كلمة المرور؟',t:'mc',o:['MaxLength','Multiline','PasswordChar','ReadOnly'],a:2},
+  {q:'النقر المزدوج على Button في المصمم يُنشئ حدث Click.',t:'tf',o:['صحيح','خطأ'],a:0},
+  {q:'ما الأداة المناسبة لعرض قائمة من الاختيارات؟',t:'mc',o:['Label','TextBox','Button','ListBox'],a:3},
+  {q:'حدث Load يحدث عند تحميل الفورم.',t:'tf',o:['صحيح','خطأ'],a:0},
+  {q:'يمكن تغيير خصائص العناصر من نافذة Properties فقط.',t:'tf',o:['صحيح','خطأ'],a:1},
+  {q:'ما الكود الصحيح لإخفاء Label1؟',t:'mc',o:['Label1.Hide=True','Label1.Visible=False','Label1.Show=False','Label1.Delete()'],a:1},
+  {q:'خاصية Text في Label تحدد لون النص.',t:'tf',o:['صحيح','خطأ'],a:1}
+],
+2:[
+  {q:'ما الكلمة المفتاحية لتعريف متغير في VB.NET؟',t:'mc',o:['Var','Let','Dim','Define'],a:2},
+  {q:'ما نوع البيانات المناسب لتخزين اسم الطالب؟',t:'mc',o:['Integer','Boolean','String','Double'],a:2},
+  {q:'ما الفرق بين المتغير والثابت؟',t:'mc',o:['لا فرق بينهما','المتغير قيمته تتغير والثابت لا تتغير','الثابت يُعرَّف بـ Dim','المتغير لا يحتاج نوع بيانات'],a:1},
+  {q:'ما الكلمة المفتاحية لتعريف ثابت في VB.NET؟',t:'mc',o:['Dim','Var','Const','Fixed'],a:2},
+  {q:'جملة التخصيص تستخدم علامة = للمساواة الرياضية فقط.',t:'tf',o:['صحيح','خطأ'],a:1},
+  {q:'ما ناتج: 10 Mod 3؟',t:'mc',o:['3','1','0','4'],a:1},
+  {q:'أي جملة تُستخدم للتفرع عند وجود حالات متعددة لمتغير واحد؟',t:'mc',o:['If','While','Select Case','For'],a:2},
+  {q:'في حلقة For، ما الكلمة التي تنهيها؟',t:'mc',o:['End For','Next','Loop','Stop'],a:1},
+  {q:'الإجراء Sub يُرجع قيمة للبرنامج.',t:'tf',o:['صحيح','خطأ'],a:1},
+  {q:'التعدي الإلكتروني جريمة يعاقب عليها القانون.',t:'tf',o:['صحيح','خطأ'],a:0},
+  {q:'أي دالة تحوّل النص إلى عدد صحيح؟',t:'mc',o:['CDbl()','CStr()','CInt()','CBool()'],a:2}
+]};
+
+let QS={};
+function startQ(term){
+  QS={term,idx:0,score:0,ans:false,qs:[...QD[term]]};
+  document.getElementById('qsel').style.display='none';
+  document.getElementById('qbox').style.display='block';
+  document.getElementById('qres').style.display='none';
+  renderQ();
+}
+function renderQ(){
+  const q=QS.qs[QS.idx],tot=QS.qs.length,pct=((QS.idx+1)/tot)*100;
+  document.getElementById('qpt').textContent=`${QS.idx+1}/${tot}`;
+  document.getElementById('qbar').style.width=pct+'%';
+  document.getElementById('qscr').textContent=`✅ ${QS.score}`;
+  document.getElementById('qarea').innerHTML=`<div class="qnum">سؤال ${QS.idx+1} من ${tot}</div>
+    <span class="qtb ${q.t==='mc'?'mc':'tf'}">${q.t==='mc'?'اختيار متعدد':'صح أم خطأ'}</span>
+    <div class="qtxt">${q.q}</div>`;
+  const L=['أ','ب','ج','د'];
+  document.getElementById('qopts').innerHTML=q.o.map((o,i)=>`
+    <button class="opt" onclick="pickA(${i})">
+      <div class="ol">${q.t==='tf'?(i===0?'✓':'✗'):L[i]}</div>
+      <span>${o}</span>
+    </button>`).join('');
+  document.getElementById('qnxt').classList.remove('vis');
+  QS.ans=false;
+}
+function pickA(idx){
+  if(QS.ans)return; QS.ans=true;
+  const q=QS.qs[QS.idx];
+  document.querySelectorAll('.opt').forEach((b,i)=>{
+    b.disabled=true;
+    if(i===q.a)b.classList.add('correct');
+    else if(i===idx&&idx!==q.a)b.classList.add('wrong');
+  });
+  if(idx===q.a){QS.score++;document.getElementById('qscr').textContent=`✅ ${QS.score}`;toast('✅ إجابة صحيحة!','g');}
+  else toast('❌ إجابة خاطئة!');
+  document.getElementById('qnxt').classList.add('vis');
+}
+function nextQ(){
+  QS.idx++;
+  QS.idx>=QS.qs.length?showRes():renderQ();
+}
+function showRes(){
+  document.getElementById('qbox').style.display='none';
+  const s=QS.score,t=QS.qs.length,p=Math.round(s/t*100);
+  let cl,ti,mg,st;
+  if(p>=90){cl='exc';ti='ممتاز! 🌟';mg='أداء رائع جداً!';st='⭐⭐⭐⭐⭐';}
+  else if(p>=70){cl='gd';ti='جيد جداً! ✅';mg='استمر في التقدم!';st='⭐⭐⭐⭐☆';}
+  else if(p>=50){cl='ps';ti='جيد! 👍';mg='راجع الدروس للتحسين!';st='⭐⭐⭐☆☆';}
+  else{cl='fl';ti='تحتاج مراجعة 📚';mg='لا تيأس! راجع وحاول مجدداً!';st='⭐⭐☆☆☆';}
+  const pts=s*5; S.pts+=pts; S.qs[QS.term]=p; S.save(); updUI();
+  const r=document.getElementById('qres');
+  r.style.display='block';
+  r.innerHTML=`<div class="rcirc ${cl}"><div class="sn">${s}</div><div class="st">من ${t}</div></div>
+    <div class="stars">${st}</div>
+    <div class="rtit">${ti}</div>
+    <div class="rmsg">${mg}<br>كسبت <strong>${pts} نقطة</strong> إضافية!</div>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px;">
+      <button class="retry" onclick="startQ(${QS.term})">🔄 حاول مجدداً</button>
+      <button class="retry" style="background:var(--g)" onclick="backQM()">📋 القائمة</button>
+      <button class="retry" style="background:var(--a);color:#1a1a1a" onclick="go('cert')">🎓 الشهادة</button>
+    </div>`;
+}
+function backQM(){
+  document.getElementById('qsel').style.display='grid';
+  document.getElementById('qbox').style.display='none';
+  document.getElementById('qres').style.display='none';
+}
+
+// ══════════════════════════════
+//  CERTIFICATE
+// ══════════════════════════════
+function renderCert(){
+  const all=[...LS[1],...LS[2]].map(l=>l.id);
+  const dn=all.filter(id=>S.done.includes(id)).length;
+  const q1=S.qs[1]!==undefined, q2=S.qs[2]!==undefined;
+  const ready=dn===all.length&&q1&&q2;
+  const name=S.user?.name||'الطالب';
+  const t1=LS[1].filter(l=>S.done.includes(l.id)).length;
+  const t2=LS[2].filter(l=>S.done.includes(l.id)).length;
+  const date=new Date().toLocaleDateString('ar-EG',{year:'numeric',month:'long',day:'numeric'});
+
+  document.getElementById('cert-c').innerHTML=ready?`
+    <div class="cbox"><div class="cin"><div class="cfr">
+      <div class="clogo">🎓</div>
+      <div class="corg">موقع تعلم Visual Basic .NET التعليمي</div>
+      <div class="ctit">شهادة إتمام دورة<br>Visual Basic .NET</div>
+      <div class="cpre">يُشهد بأن الطالب / الطالبة</div>
+      <div class="cname">${name}</div>
+      <div class="cdiv">🏅</div>
+      <div class="cdesc">قد أتم بنجاح جميع دروس ومتطلبات دورة<br>
+        <strong>Visual Basic .NET للصف الثالث الإعدادي</strong><br>
+        (الترم الأول والترم الثاني) واجتاز الاختبارات المقررة بتفوق</div>
+      <div class="cstars">★ ★ ★ ★ ★</div>
+      <div class="cftr">
+        <div class="csig"><div class="csig-line"></div><p>إجمالي النقاط: ${S.pts}</p></div>
+        <div class="csig"><div class="csig-line"></div><p>التاريخ: ${date}</p></div>
+        <div class="csig"><div class="csig-line"></div><p>الدروس: ${dn}/${all.length}</p></div>
+      </div>
+    </div></div></div>
+    <button class="printbtn" onclick="window.print()">🖨️ طباعة الشهادة</button>`
+  :`<div class="clocked">
+      <div class="li">🔒</div>
+      <h3>الشهادة غير متاحة بعد</h3>
+      <p>أتمم جميع الدروس واجتز الاختبارات للحصول على شهادتك!</p>
+    </div>
+    <div class="psum">
+      <h4>📊 تقدمك الحالي</h4>
+      ${pi('دروس الترم الأول',t1,LS[1].length,'var(--s)')}
+      ${pi('دروس الترم الثاني',t2,LS[2].length,'var(--g)')}
+      ${pi('اختبار الترم الأول',q1?1:0,1,'var(--a)',q1?'✅':'❌')}
+      ${pi('اختبار الترم الثاني',q2?1:0,1,'var(--a)',q2?'✅':'❌')}
+      <div style="margin-top:14px;text-align:center;">
+        <button class="done-btn" style="margin:0 auto" onclick="openL(1)">🚀 أكمل التعلم</button>
+      </div>
+    </div>`;
+}
+function pi(lbl,v,mx,col,ov){
+  const p=mx>0?Math.round(v/mx*100):0;
+  return`<div class="pi"><span>${lbl}</span><div class="pbw"><div class="pbf" style="width:${p}%;background:${col}"></div></div><span class="pp">${ov??`${v}/${mx}`}</span></div>`;
+}
+
+// ══════════════════════════════
+//  AUTH
+// ══════════════════════════════
+function doLogin(){
+  const name=document.getElementById('lu').value.trim();
+  const err=document.getElementById('le');
+  err.style.display='none';
+  if(!name){err.textContent='⚠️ الرجاء إدخال اسمك أولاً';err.style.display='block';return;}
+  const user={name, u:name};
+  S.user=user; localStorage.setItem('vbu',JSON.stringify(user)); S.load();
+  updUI();
+  document.getElementById('wname').textContent='مرحباً بك يا '+user.name+' في رحلة تعلم VB.NET! 🎉';
+  document.getElementById('fl').style.display='none';
+  document.getElementById('wbox').style.display='block';
+  toast('🎉 أهلاً وسهلاً يا '+user.name+'!','g');
+}
+
+function doLogout(){
+  S.user=null; localStorage.removeItem('vbu');
+  S.pts=0; S.done=[]; S.qs={};
+  updUI(); go('home'); toast('👋 تم تسجيل الخروج');
+}
+
+function updUI(){
+  document.getElementById('pts').textContent=S.pts;
+  const pill=document.getElementById('upill');
+  const tl=document.getElementById('t-login');
+  if(S.user){
+    pill.style.display='flex';
+    document.getElementById('uname-disp').textContent=S.user.name;
+    pill.onclick=doLogout;
+    tl.textContent='🚪 خروج'; tl.onclick=doLogout;
+    const inp=document.getElementById('lu');
+    if(inp) inp.value=S.user.name;
+  } else {
+    pill.style.display='none';
+    tl.textContent='👤 الدخول'; tl.onclick=()=>go('login');
+    // Reset login form if user logs out
+    const fl=document.getElementById('fl');
+    const wb=document.getElementById('wbox');
+    if(fl) fl.style.display='';
+    if(wb) wb.style.display='none';
+  }
+}
+
+// ══════════════════════════════
+//  TOAST
+// ══════════════════════════════
+let TT;
+function toast(msg,type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.className='toast show'+(type==='g'?' g':type==='o'?' o':'');
+  clearTimeout(TT);
+  TT=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ══════════════════════════════
+//  SPLASH
+// ══════════════════════════════
+//  SPLASH
+// ══════════════════════════════
+function startSplash(){
+  const sp = document.getElementById('splashOverlay');
+  // force visibility
+  sp.style.cssText='position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#1a3a6e,#2563eb 60%,#7c3aed);display:flex;align-items:center;justify-content:center;';
+  // trigger child animations
+  sp.querySelectorAll('.v-trophy,.v-stars,.v-title,.v-sub').forEach(el=>{
+    el.classList.remove('pop');
+    void el.offsetWidth;
+    el.classList.add('pop');
+  });
+  // after 1.8s fade out then navigate
+  setTimeout(()=>{
+    sp.style.transition='opacity .35s';
+    sp.style.opacity='0';
+    setTimeout(()=>{
+      sp.style.display='none';
+      sp.style.cssText='';
+      go('login');
+    }, 380);
+  }, 1800);
+}
+
+// ══════════════════════════════
+//  INIT
+// ══════════════════════════════
+(function(){
+  S.load(); updUI(); go('home');
+})();
+</script>
+</body>
+</html>
